@@ -1,1 +1,1401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문학과 삶에서 만나는 의미 - 국어 학습 도우미 및 형성 평가</title>
+  <!-- Tailwind CSS 및 FontAwesome 아이콘, 라이브러리 탑재 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght=400;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 한지 느낌의 은은한 아날로그 문학 감성 배경판 */
+    .traditional-paper {
+      background-image: radial-gradient(#faf6ee 1px, transparent 0), radial-gradient(#faf6ee 1px, transparent 0);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+      background-color: #fefcf8;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-gray-50 to-indigo-50/30 text-gray-800 min-h-screen p-4 md:p-8">
 
+  <div class="max-w-4xl mx-auto space-y-6">
+    
+    <!-- 메인 헤더 -->
+    <header class="text-center py-6 bg-white rounded-2xl shadow-sm border border-indigo-100/50 animate-fade-in">
+      <div class="inline-block p-3 bg-indigo-50 text-indigo-700 rounded-2xl mb-2">
+        <i class="fa-solid fa-book-open text-3xl"></i>
+      </div>
+      <h1 class="text-3xl font-extrabold text-indigo-800 tracking-tight">핵심 콕콕! 문학과 삶에서 만나는 의미</h1>
+      <p class="text-gray-500 mt-2 text-sm md:text-base">개념 학습, 연별 핵심 구절 분석 및 영역별 10문항 실전 형성 평가</p>
+    </header>
+
+    <!-- 인적 사항 수집 카드 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-indigo-100/40">
+      <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+        <div class="flex items-center gap-2 text-indigo-800 font-extrabold text-sm md:text-base">
+          <i class="fa-solid fa-user-pen text-indigo-600"></i>
+          <span>✍️ 평가 및 결과 전송용 인적 사항 입력</span>
+        </div>
+        <span class="text-xs text-indigo-500 bg-indigo-50 px-2.5 py-1 rounded-full font-semibold">필수 기입</span>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-gray-500 mb-1">학년</label>
+          <input 
+            type="number" 
+            id="input-grade"
+            placeholder="예) 1"
+            min="1"
+            max="6"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50/50"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-500 mb-1">반</label>
+          <input 
+            type="number" 
+            id="input-class"
+            placeholder="예) 3"
+            min="1"
+            max="30"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50/50"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-500 mb-1">번호</label>
+          <input 
+            type="number" 
+            id="input-number"
+            placeholder="예) 15"
+            min="1"
+            max="50"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50/50"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-500 mb-1">이름</label>
+          <input 
+            type="text" 
+            id="input-name"
+            placeholder="예) 김성경"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50/50"
+          />
+        </div>
+      </div>
+      
+      <div id="info-status-box" class="mt-3 text-xs text-red-500 font-medium flex items-center gap-1.5">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>인적사항이 비워져 있으면 '형성 평가' 답안 제출 및 스프레드시트 기록 전송을 하실 수 없습니다.</span>
+      </div>
+    </div>
+
+    <!-- 대주제 선택 탭 (메인 버튼) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100" id="main-tabs-container">
+      <!-- JavaScript에서 동적으로 메인 탭이 렌더링됩니다. -->
+    </div>
+
+    <!-- 세부 영역 선택 탭 (서브 버튼) -->
+    <div class="flex flex-wrap gap-2 justify-center py-2" id="sub-tabs-container">
+      <!-- JavaScript에서 동적으로 서브 탭이 렌더링됩니다. -->
+    </div>
+
+    <!-- 경고 메시지 배너 -->
+    <div id="warning-banner" class="hidden flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm font-semibold animate-bounce">
+      <i class="fa-solid fa-circle-exclamation text-lg flex-shrink-0"></i>
+      <span id="warning-text">경고 문구</span>
+    </div>
+
+    <!-- 주 학습 콘텐츠 영역 -->
+    <div class="bg-white rounded-3xl shadow-md p-6 md:p-10 border border-indigo-50/60 mt-2 min-h-[350px] transition-all duration-300">
+      
+      <!-- 콘텐츠 헤더 -->
+      <div class="flex items-center gap-3.5 mb-6 border-b border-gray-100 pb-4">
+        <span class="p-3 rounded-xl bg-indigo-50 text-indigo-600" id="content-icon-container">
+          <i class="fa-solid fa-info" id="content-icon"></i>
+        </span>
+        <div>
+          <span class="text-xs font-bold text-indigo-500 tracking-wider uppercase" id="content-category-path">시의 특징 ㆍ 뜻</span>
+          <h2 class="text-xl md:text-2xl font-bold text-gray-900 mt-0.5" id="content-title">콘텐츠 제목</h2>
+        </div>
+      </div>
+      
+      <!-- 핵심 요약 내용 (파란색 세로 강조선 제거 완료) -->
+      <div class="text-base md:text-lg text-gray-700 mb-8 p-4 rounded-xl leading-relaxed border border-indigo-100 bg-indigo-50/40" id="content-brief">
+        기본 요약 설명글이 여기에 들어갑니다.
+      </div>
+
+      <!-- 세부 정리 내용 리스트 혹은 퀴즈 레이아웃 -->
+      <div class="space-y-4" id="content-details-area">
+        <!-- 동적으로 기입되는 세부 내용 항목 리스트 또는 시험지 폼 -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 데이터 정의 및 동작 스크립트 -->
+  <script>
+    const learningData = {
+      "시의 특징": {
+        icon: "fa-book-open",
+        subTabs: {
+          "뜻": {
+            icon: "fa-circle-info",
+            title: "시(詩)의 뜻과 구성요소",
+            content: "인간의 <strong class='text-indigo-950 font-extrabold'>사상(생각)</strong>과 <strong class='text-indigo-950 font-extrabold'>정서(감정)</strong>를 <strong class='text-indigo-950 font-extrabold'>운율이 있는 언어</strong>로 <strong class='text-indigo-950 font-extrabold'>압축(함축)</strong>하여 표현하는 함축적 예술 문학",
+            details: [
+              "의미적 요소(주제): 시인이 시를 통해 전달하고자 하는 가장 중심적인 <strong class='text-gray-900 font-bold'>생각과 정서(사상)</strong>",
+              "음악적 요소(운율): 시를 읽을 때 느껴지는 규칙적이고 은근한 <strong class='text-gray-900 font-bold'>말의 가락(리듬감)</strong>",
+              "회화적 요소(심상): 시의 구절을 대할 때 마음속에 감각적으로 그려지는 <strong class='text-gray-900 font-bold'>구체적 이미지(그림)</strong>",
+              "함축적 의미: 일상 언어와 달리 사전적 단어 뜻을 넘어 <strong class='text-gray-900 font-bold'>다양하고 깊은 암시적 가치</strong>를 내포"
+            ]
+          },
+          "운율": {
+            icon: "fa-music",
+            title: "운율 (시의 음악성)",
+            content: "시를 읽을 때 느껴지는 말의 가락(리듬감)이며, 특히 시조(時調)는 글자 수와 끊어 읽는 단위가 규칙적으로 정해져 있어 눈으로 쉽게 보이는 '외형률'을 대표하는 정형시 갈래",
+            details: [
+              "형성 방법: 동일하거나 유사한 언어 요소(소리, 단어, 문장 구조 등)의 '반복'을 통해 형성",
+              "내재율 vs 외형률: 현대시처럼 마음속으로 느껴지는 은근한 운율을 '내재율', 시조처럼 형식적인 규칙성에 의해 겉으로 확연히 드러나는 운율을 '외형률'로 규정",
+              "음수율 (글자 수의 반복): 시조는 주로 '3ㆍ4조' 또는 '4ㆍ4조'의 글자 수 규칙 적용 (한 구절이 대체로 3글자나 4글자로 구성됨)",
+              "음보율 (끊어 읽는 단위의 반복): 시조는 한 줄(초장/중장/종장)을 호흡의 단위에 맞춰 네 마디로 끊어 읽는 '4음보' 율격 유지",
+              "[대표 예시] 기생 '홍랑(洪娘)'의 시조를 통해 알아보는 운율 구조:",
+              "초장: 묏버들 (3) / 가려 꺾어 (4) / 보내노라 (4) / 님에게 (3) ☞ [4음보 구성 및 3ㆍ4ㆍ4ㆍ3조 음수율 적용]",
+              "중장: 자시는 (3) / 창밖에 (3) / 심어 두고 (4) / 보소서 (3) ☞ [4음보 구성 및 임을 향한 절절한 애정의 태도 투영]",
+              "종장: 밤비에 (3) / 새잎이 (3) / 나거든 (3) / 날인가도 (4) / 여기소서 (4) ☞ [4음보 구성 및 새잎(분신)을 통한 변치 않는 사랑 약속]",
+              "⚠️ 시조의 핵심 절대 규칙: 시조의 마지막 단락(종장) 첫째 음보(\"밤비에\" 부분)는 무슨 일이 있어도 반드시 '3글자'로 고정해야 하는 매우 엄격한 글자 수 제약(외형률의 특징)"
+            ]
+          },
+          "심상": {
+            icon: "fa-palette",
+            title: "심상 (이미지)",
+            content: "인간의 감각에 의하여 마음속에서 그려지는 느낌으로, 눈에 보이지 않는 추상적인 생각이나 감정을 감각적인 언어로 생생하게 전달하는 역할",
+            details: [
+              "시각적 심상: 모양, 빛깔, 움직임 등 눈으로 보는 듯한 감각 연상 (예: 파란 하늘, 붉은 노을)",
+              "청각적 심상: 귀로 듣는 듯한 소리의 감각 연상 (예: 쪼르륵 물소리, 사각사각 낙엽 소리)",
+              "후각적 심상: 코로 냄새를 맡는 듯한 감각 연상 (예: 은은한 아카시아 향기, 매캐한 연기)",
+              "미각적 심상: 혀로 맛을 보는 듯한 감각 연상 (예: 새콤달콤한 귤, 시큼한 식초)",
+              "촉각적 심상: 살결에 닿는 감촉이나 온도의 감각 연상 (예: 보드라운 볼, 차가운 얼음)",
+              "공감각적 심상 (★감각의 전이): 한 감각을 다른 감각으로 이끌어 옮겨 표현하는 기법 (감각의 전이 작용)",
+              "💡 공감각적 심상 표현 원리: 'A(원래 감각)의 B(전이된 감각)화' 형식으로 표현 (청각의 시각화 등)",
+              "✨ [청각의 시각화] 예시 1: \"분수처럼 흩어지는 푸른 종소리\" → 귀로 듣는 '종소리(청각)'를 눈으로 보는 '푸른빛(시각)'으로 변형하여 전이",
+              "✨ [청각의 시각화] 예시 2: \"금빛 게으른 울음\" → 귀로 듣는 소의 '울음소리(청각)'를 눈으로 보이는 따뜻한 '금빛(시각)'으로 변형하여 전이",
+              "✨ [청각의 후각화] 예시 3: \"향기로운 너의 목소리\" → 귀로 듣는 '목소리(청각)'를 코로 맡는 '향기(후각)'로 변형하여 전이",
+              "✨ [시각의 촉각화] 예시 4: \"햇살의 맑은 서늘함\" → 눈으로 보는 '햇살(시각)'을 살결로 느끼는 '서늘함(촉각)'으로 변형하여 전이"
+            ]
+          },
+          "종류": {
+            icon: "fa-folder-tree",
+            title: "시의 종류",
+            content: "개인의 마음을 노래하는 '내용상의 분류'와 외형적 형식의 유무에 따른 '형식상의 분류'로 구분",
+            details: [
+              "📌 내용상의 분류:",
+              "  서정시(抒情詩): 개인의 주관적인 감정이나 사상을 정제된 언어로 섬세하게 노래한 시 (대표 제재: 이성선, 「사랑하는 별 하나」)",
+              "  서사시(抒사詩): 역사적 사건, 민족적 과업, 혹은 영웅적 활약상을 객관적이고 이야기 구조로 길게 서술한 시 (대표 제재: 이규보, 「동명왕편」)",
+              "📌 형식상의 분류:",
+              "  정형시(定型詩): 시구의 글자 수(음수율)나 호흡의 마디(음보율)가 외형적인 제약 속에 고정된 시 (대표 제재: 우리나라 고전 문학 '시조')",
+              "  자유시(自由시): 일정한 정형적 규칙에 얽매이지 않고, 행 및 연을 자유롭게 배열하여 내재율을 활용한 현대시 (대표 제재: 오규원, 「3월」)",
+              "  산문시(散文詩): 행의 줄 바꿈이 거의 없거나 아예 산문(줄글)처럼 연달아 쓰되 내부에 비유와 리듬을 품은 시"
+            ]
+          },
+          "비유": {
+            icon: "fa-wand-magic-sparkles",
+            title: "비유의 즐거움",
+            content: "표현하고자 하는 대상(원관념)을 구체화하고 생생하게 전달하기 위해 비슷한 다른 대상(보조관념)에 빗대어 표현하는 기법 (밑줄은 원관념, 배경 노란색은 보조관념을 의미)",
+            details: [
+              "직유법: '같이, 처럼, 듯이' 등 연결어를 사용하여 직접 빗대는 기법",
+              "🔍 예시: <u>그녀</u>는 <span class='bg-yellow-200 border-b-2 border-yellow-400 font-bold px-1 rounded'>호박꽃</span>같이 생겼어",
+              "👉 원관념 ➔ 그녀 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 보조관념 ➔ 호박꽃",
+              "은유법: 연결어 없이 'A는 B이다' 형태로 숨겨서 빗대는 기법",
+              "🔍 예시: 내 <u>마음</u>은 <span class='bg-yellow-200 border-b-2 border-yellow-400 font-bold px-1 rounded'>호수</span>요",
+              "👉 원관념 ➔ 마음 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 보조관념 ➔ 호수",
+              "의인법: 사람이 아닌 대상을 사람처럼 생각하고 행동하는 것처럼 표현하는 기법",
+              "🔍 예시: <u>풀</u>이 눕는다, 드디어 <span class='bg-yellow-200 border-b-2 border-yellow-400 font-bold px-1 rounded'>울었다</span>",
+              "👉 원관념 ➔ 풀 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 보조관념 ➔ 울었다 (사람의 감정 및 행동 표현)"
+            ]
+          },
+          "상징": {
+            icon: "fa-shapes",
+            title: "상징의 이해",
+            content: "원관념은 숨기고 보조관념만 제시하여 의미를 암시하는 방법으로, 비유와 달리 원관념과 보조관념 사이의 직접적인 유사성이 없어도 공통된 인식을 바탕으로 다양한 해석이 가능함",
+            details: [
+              "관습적 상징: 사회 문화적으로 공통으로 인정하는 상징 (예: 비둘기=평화, 눈=겨울, 대나무=절개)",
+              "개인적 상징: 시인이 작품 속에서 독창적으로 새롭게 의미를 부여한 상징 (작가 고유의 해석 적용)",
+              "원형적 상징: 시대나 민족을 초월하여 인간의 무의식 속에 잠재된 보편적 상징 (예: 물=생명/정화, 불=열정/파괴)"
+            ]
+          },
+          "형성 평가": {
+            icon: "fa-clipboard-question",
+            title: "시의 특징 - 형성 평가 (10문항)",
+            content: "시의 3요소, 운율, 비유, 상징, 종류 및 다채로운 심상에 관한 10문항",
+            isQuiz: true,
+            questions: [
+              { id: "c1", question: "시를 읽을 때 마음속에 떠오르는 감각적이고 생생한 느낌이나 가상의 그림을 가리키는 구성 요소는?", options: ["주제", "운율", "심상", "비유"], answer: 2, explanation: "심상(이미지)은 감각적 자극을 통해 마음속에 생생하게 그려지는 그림이나 느낌을 지칭" },
+              { id: "c2", question: "‘내 마음은 잔잔한 호수다’에 사용된 보조관념과 알맞은 비유법은?", options: ["잔잔함 - 직유법", "호수 - 은유법", "마음 - 의인법", "호수 - 대조법"], answer: 1, explanation: "‘A(내 마음)는 B(호수)이다’ 형식의 연결어 없는 비유이므로 은유법이며 보조관념은 '호수'에 해당" },
+              { id: "c3", question: "\"분수처럼 흩어지는 푸른 종소리\"에 쓰인 청각의 시각화 현상을 일컫는 심상은?", options: ["시각적 심상", "촉각적 심상", "공감각적 심상", "후각적 심상"], answer: 2, explanation: "종소리(청각)를 푸른색(시각)으로 전이시켜 표현한 공감각적 심사에 속함" },
+              { id: "c4", question: "정해진 형식에 구속받지 않고 시인의 개성에 따라 행과 연을 배열하여 내재율을 가지는 시의 형식은?", options: ["정형시", "극시", "자유시", "서사시"], answer: 2, explanation: "외형적 정형성 없이 자유롭게 운율을 형성하는 현대시 갈래인 '자유시'로 판정" },
+              { id: "c5", question: "시를 내용상 분류할 때, 개인의 주관적인 사상과 정서를 정제된 말로 노래하는 시는?", options: ["서정시", "서사시", "산문시", "정형시"], answer: 0, explanation: "개인의 정서 and 내면을 전문적으로 노래하는 갈래는 '서정시'로 규정" },
+              { id: "c6", question: "시의 가락을 만드는 '운율'의 가장 원초적이고 보편적인 형성 원리는?", options: ["변주와 왜곡", "문맥적 결합", "반복", "생략과 무음"], answer: 2, explanation: "동일한 음운, 낱말, 문장 구조의 규칙적인 '반복'을 통해 리듬감을 형성" },
+              { id: "c7", question: "시조는 초장, 중장, 종장에 걸쳐 끊어 읽는 단위가 고정되어 있습니다. 몇 음보 율격인가요?", options: ["2음보", "3음보", "4음보", "5음보"], answer: 2, explanation: "우리나라의 정통 시조는 외형적으로 아주 엄격한 4음보의 규칙적 호흡 단위를 취함" },
+              { id: "c8", question: "사람이 아닌 대상에 생각이나 행동 능력을 부여하여 사람처럼 묘사하는 표현 기법은?", options: ["직유법", "의인법", "은유법", "상징법"], answer: 1, explanation: "인격을 부여하여 사람처럼 행동하도록 형상화하는 기법은 '의인법'임" },
+              { id: "c9", question: "‘대나무=절개’, ‘비둘기=평화’처럼 암시적이며 다의적인 깊은 뜻을 전하는 표현 기법은?", options: ["은유", "상징", "심상", "직유"], answer: 1, explanation: "원관념을 드러내지 않고 보조관념의 보편적 합의로 뜻을 암시하는 '상징'에 해당" },
+              { id: "c10", question: "다음 중 '청각의 후각화'에 해당하는 참신한 공감각적 심상은?", options: ["달콤한 서늘함", "자욱한 소리", "향기로운 목소리", "푸른 울음소리"], answer: 2, explanation: "목소리(청각)라는 자극을 향기(후각)로 바꾸어 감각을 전이시켰으므로 청각의 후각화 사례임" }
+            ]
+          }
+        }
+      },
+      "3월": {
+        icon: "fa-leaf",
+        subTabs: {
+          "제재 정리": {
+            icon: "fa-table-list",
+            title: "오규원, 「3월」 - 제재 정리",
+            content: "이른 봄을 맞이하여 겨울에서 깨어나는 자연의 모습을 생동감 있게 그려낸 자유시",
+            details: [
+              "갈래: 자유시, 서정시 (형식적 구애 없는 현대 서정 갈래)",
+              "성격: 감각적, 생동적, 묘사적",
+              "제재: 3월의 산과 들",
+              "주제: 봄이 오는 산과 들의 힘찬 생동감 및 자연의 소생",
+              "특징: 시간의 경과 및 분위기 전환을 바탕으로 한 입체적 의인화 묘사 기법"
+            ]
+          },
+          "전문 해설": {
+            icon: "fa-book-open-reader",
+            title: "오규원, 「3월」 - 연별 전문 스마트 해설",
+            content: "시 구절을 터치하거나 마우스를 올리면 각 연별(1~8연) 구성, 화자의 상태, 비유와 상징, 시상의 전개를 입체적으로 학습 가능",
+            isInteractive: true,
+            author: "오규원",
+            lines: [
+              {
+                id: "m_l1",
+                stanza: "1~2연",
+                text: "봄눈이 내리더니, 산과 들이 하얀 이불을 덮고 잠이 들었다",
+                speaker: "고요한 대지의 침묵 속에서 겨울잠에 빠진 자연을 애정 어리게 지켜보는 화자",
+                symbol: "하얀 이불 : 온 천지를 뒤덮은 겨울의 '눈(雪)'을 지칭하는 은유 / 잠이 들었다 : 휴면 중인 대지의 정적 상태를 형상화한 의인법",
+                flow: "봄눈이 내리며 고요하고 정적인 수면 상태에 놓인 초봄의 자연 정취 연출 (정적인 분위기)"
+              },
+              {
+                id: "m_l2",
+                stanza: "3~4연",
+                text: "골짝을 타고 내리는 물소리만 나즉나즉 자장가처럼 들리던 하루가 지나고",
+                speaker: "대지 깊숙한 곳에서 흐르는 미세한 소리까지 감지하는 섬세한 관찰자",
+                symbol: "자장가처럼 : 흐르는 물소리에 청각적 포근함을 투영한 직유법 / 나즉나즉 : '나직나직'의 의도적 시적 허용을 통한 정적 심화",
+                flow: "골짜기를 타고 녹아 흐르는 물소리를 기점으로 해빙의 미세한 맥박 소리와 시간의 경과 유도"
+              },
+              {
+                id: "m_l3",
+                stanza: "5~6연",
+                text: "해가 떠오르더니 산과 들에 좌아악 깔린 이불을 모조리 걷어가버렸다",
+                speaker: "태양의 활력과 역동적인 대지의 온도를 온몸으로 주시하는 자아",
+                symbol: "의인법 적용 : 해가 쌓인 눈을 녹여 없애는 대자연의 해빙 작용을 인간이 손으로 '이불을 걷어가버렸다'는 동작으로 유쾌하게 묘사 (의인적 형상화)",
+                flow: "아침에서 점심으로의 시간의 흐름과 태양의 등장을 매개로 한 극적인 분위기 전환 및 본격적인 해빙 전개 (정에서 동으로의 변화)"
+              },
+              {
+                id: "m_l4",
+                stanza: "7~8연",
+                text: "이불이 걷힌 그 자리에는 잠자리에서 뛰어나온 아이들처럼 파난싹들이 와자지껄 일어나 있다",
+                speaker: "대지 위에 역동적으로 솟아나는 새 생명력의 현장을 기쁨으로 마주하는 자아",
+                symbol: "아이들처럼 : 갓 돋아난 풋풋한 새싹들을 순수한 동심의 상징인 '아이들'에 빗댄 직유법 / 와자지껄 일어나 : 새싹의 역동적인 움틈을 소란스러운 시청각적 이미지로 변모시킨 의인법",
+                flow: "눈이 녹은 자리(이불이 걷힌 곳)에서 파릇한 새싹들이 힘차게 대지를 뚫고 소생하는 봄 생명력의 찬란한 폭발 (동적인 대활기로의 절정)"
+              }
+            ]
+          },
+          "내용 정리": {
+            icon: "fa-book-open-reader",
+            title: "「3월」 연별 내용 정리 (구절 적시)",
+            content: "봄을 맞이하는 3월의 산과 들의 역동적인 모습이 시간의 흐름과 시선의 이동에 따라 시적으로 생생하게 펼쳐짐",
+            details: [
+              "1~2연 (겨울의 수면 상태): \"산과 들이 하얀 이불을 덮고 잠이 들었다\" → 겨울 동안 눈(하얀 이불)에 덮여 조용히 겨울잠을 자고 있는 산과 들의 정적 묘사",
+              "3~4연 (생명력의 미세한 움직임): \"골짝을 타고 내리는 물소리만 나즉나즉 자장가처럼 들리던\" → 조용함 속에서 얼음이 녹아 흐르는 미세한 물소리를 통한 시간 경과 암시",
+              "5~6연 (해빙과 분위기 전환): \"해가 떠오르더니 산과 들에 좌아악 깔린 이불을 모조리 걷어가버렸다\" → 따뜻한 태양의 빛으로 눈을 녹여내는 역동적인 해빙 작용 묘사",
+              "7~8연 (봄날의 새싹 소생): \"잠자리에서 뛰어나온 아이들처럼 파난싹들이 와자지껄 일어나 있다\" → 대지에서 파란 새싹들이 일제히 돋아나는 힘찬 생동감 표현"
+            ]
+          },
+          "표현상의 특징": {
+            icon: "fa-wand-magic-sparkles",
+            title: "「3월」 표현상의 특징",
+            content: "자연을 살아있는 사람처럼 표현하고, 다채로운 심상을 활용하여 봄의 생동감을 참신하게 형상화함",
+            details: [
+              "은유법 사용: '하얀 이불(보조관념)'을 통해 대지를 덮고 있던 겨울의 '눈(원관념)'을 감각적이고 따뜻하게 비유",
+              "직유법 사용: 골짜기 흐르는 물소리를 '자장가처럼'에 빗대어, 겨울잠을 깨우는 평화로운 아침 직전의 고요함을 전달",
+              "의인법 사용: 들판의 파란 싹들이 '와자지껄 일어나' 있다고 표현하여, 겨울잠에서 깨어나는 새싹의 힘찬 생동감과 활기를 인격화하여 묘사",
+              "음성 상징어 활용: '나즉나즉', '와자지껄' 등의 소리와 태도를 흉내 내는 말을 통해 리듬감을 형성하고 현장감을 부여",
+              "감각의 대비: 1~4연의 정적인 분위기(하얀색, 자장가 소리, 고요한 수면)에서 5~8연의 동적인 분위기(태양의 등장, 이불 걷기, 파란 새싹, 와자지껄 소동)로 변화하며 시상에 활력을 불어넣음"
+            ]
+          },
+          "형성 평가": {
+            icon: "fa-clipboard-question",
+            title: "오규원, 「3월」 - 형성 평가 (10문항)",
+            content: "시 「3월」의 계절적 특징 및 정밀한 시구 해석 능력을 평가하는 10문항",
+            isQuiz: true,
+            questions: [
+              { id: "m1", question: "시 「3월」에서 대지를 덮은 '눈(雪)'을 간접 비유한 은유 표현은 무엇인가요?", options: ["골짝 물", "파란 싹", "하얀 이불", "나즉한 숨결"], answer: 2, explanation: "산과 들을 뒤덮은 하얀 눈을 포근한 이불에 은유한 '하얀 이불'을 정답으로 도출" },
+              { id: "m2", question: "'파난싹들이 와자지껄 일어나'라는 구절에 반영된 대표 수사법은?", options: ["대조법", "반어법", "의인법", "역설법"], answer: 2, explanation: "새싹들이 소리를 내며 뛰어나오듯 기운차게 일어난다고 표현하여 인격을 부여한 '의인법'임" },
+              { id: "m3", question: "물소리를 '자장가처럼 들리던'으로 묘사하여 고요함을 부여한 비유는?", options: ["은유법", "직유법", "대유법", "중의법"], answer: 1, explanation: "'~처럼'이라는 구체적 연결 고리를 사용하여 빗댄 '직유법'으로 파악" },
+              { id: "m4", question: "이 시의 1~2연이 그려내고 있는 계절적 분위기는 무엇입니까?", options: ["역동적 축제", "정적이고 잠잠한 겨울잠", "황폐하고 매서운 한겨울 폭풍", "쓸쓸하고 고독한 가을 저녁"], answer: 1, explanation: "대지가 눈에 덮여 평화롭게 잠을 자며 봄을 예비하는 조용하고 '정적인 상태'로 규정" },
+              { id: "m5", question: "이 시에서 리듬감을 배가하고 현장감을 살리는 음성 상징어로만 묶인 것은?", options: ["하루, 종일", "나즉나즉, 와자지껄", "하얀, 파란", "아침, 골짝"], answer: 1, explanation: "행동의 가락과 소리를 흉내 내어 운율을 뿜어내는 '나즉나즉', '와자지껄'에 해당" },
+              { id: "m6", question: "이 시에서 새싹의 돋아남을 효과적으로 연출하기 위해 사용한 지배적 색채는?", options: ["붉은색", "노란색", "검은색", "파란색"], answer: 3, explanation: "'파란 싹'의 선명한 푸른빛 색채 대비를 통해 소생하는 봄의 생명력을 극적으로 구체화" },
+              { id: "m7", question: "이 시의 전체적인 시상 전개 과정으로 가장 타당한 설명은?", options: ["공간의 복잡한 수평적 이동", "정(靜)적인 겨울잠에서 동(동)적인 봄의 생동으로의 극적 변화", "슬픔에서 절망으로의 일방적인 낙하", "현재에서 고대로의 시간적 역행"], answer: 1, explanation: "고요히 잠잠하던 정적 기조에서 햇살의 등장을 계기를 자극삼아 와자지껄 생명이 일어나는 동적 흐름을 보임" },
+              { id: "m8", question: "이 시의 중심 화제이자 대표적인 시적 제재는 무엇인가요?", options: ["낙엽의 소멸", "도시의 소음", "3월 봄날 대자연의 생동감", "고향 부모님에 대한 애틋함"], answer: 2, explanation: "겨울에서 깨어나 봄으로 옷을 갈아입는 3월 산과 들의 찬란한 생명 도약을 핵심 제재로 삼음" },
+              { id: "m9", question: "해가 눈을 걷어내는 부분을 '이불을 모조리 걷어가버렸다'고 표현한 것의 진정한 미학적 효과는?", options: ["태양의 파괴성을 고발함", "자연의 해빙 순환 작용을 역동적이고 친근한 인격적 행동으로 구체화", "과거 시절에 대한 애틋한 그리움을 유도", "기성세대의 이기심을 상징"], answer: 1, explanation: "해빙의 가치와 태양의 빛나는 작용을 사람이 이불을 치워주는 적극적 활동으로 전이해 묘사" },
+              { id: "m10", question: "이 시의 전체 갈래에 관한 설명 중 참인 것은?", options: ["엄격한 형식이 고정된 정형시", "희곡 대본의 기초가 되는 극시", "형식이 자유롭고 개인 정서를 담은 자유시이자 서정시", "대서사 사건을 기록한 영웅 서사시"], answer: 2, explanation: "형식적 구속에서 벗어나 개성의 언어로 감정을 압축하는 '자유시, 서정시'에 배치" }
+            ]
+          }
+        }
+      },
+      "사랑하는 별 하나": {
+        icon: "fa-star",
+        subTabs: {
+          "제재 정리": {
+            icon: "fa-table-list",
+            title: "이성선, 「사랑하는 별 하나」 - 제재 정리",
+            content: "고통받고 소외된 이웃들에게 위로와 희망을 주는 따뜻한 존재가 되고 싶은 화자의 간절한 소망을 노래한 시",
+            details: [
+              "갈래: 자유시, 서정시 (개인의 주관적 마음을 정제하여 흘려보내는 갈래)",
+              "성격: 서정적, 고백적, 의지적",
+              "제재: 별, 꽃, 길",
+              "주제: 이웃에게 희망과 기쁨을 주는 따뜻하고 이타적인 삶에 대한 소망"
+            ]
+          },
+          "전문 해설": {
+            icon: "fa-book-open-reader",
+            title: "이성선, 「사랑하는 별 하나」 - 전문 입체 해설",
+            content: "시 구절에 마우스 커서를 올리거나 터치하면 각 연별(1~4연) 구성, 화자의 상태, 비유와 상징, 시상의 전개를 입체적으로 학습 가능",
+            isInteractive: true,
+            author: "이성선",
+            lines: [
+              {
+                id: "s_l1",
+                stanza: "1~2연",
+                text: "나도 별과 꽃 같은 사람이 될 수 있을까. 외로울 때 다가와 눈 마주쳐 마음 비쳐 주고, 눈물짓듯 웃어 주는 존재가 될 수 있을까.",
+                speaker: "쓸쓸한 삶 속에서 타인에게 위로와 희망을 건네는 따뜻한 존재가 되기를 간절히 열망하는 화자의 조심스러운 내적 탐색",
+                symbol: "별ㆍ꽃 : 어둡고 외로운 타인을 묵묵히 응시하며 따뜻한 교감을 이끌고, 상처받은 마음을 환하게 보듬어주는 치유와 사랑의 표상",
+                flow: "의문형 통사 구조인 '~될 수 있을까'의 종결어미 대칭 반복을 통해 음악적 가락(리듬감)을 극대화하며 소망의 간절함을 증폭"
+              },
+              {
+                id: "s_l2",
+                stanza: "3~4연",
+                text: "가슴에 사랑하는 별 하나를 갖고 싶다. 마음 어두운 밤 깊을수록 나를 씻어 길을 비추어 주는 그런 사람 하나 갖고 싶다.",
+                speaker: "외롭고 단절된 현실적 고난에 굴복하지 않고, 마침내 내면에 숭고한 사랑을 품고 성숙한 인생의 동반자를 가지겠다는 의지",
+                symbol: "별 하나ㆍ맑은 눈빛 : 영혼을 깨끗이 정화하는 깊은 성찰의 시선 / 그런 사람 : 힘겨운 고난 속에서도 서로의 기둥이자 버팀목이 되어 주는 동반자적 가치",
+                flow: "1ㆍ2연의 의문형 구조에서 탈피하여 단호한 다짐과 소망을 뜻하는 '~갖고 싶다'로 종결어미를 적극 전환하여 운율적 변주 시도"
+              }
+            ]
+          },
+          "내용 정리": {
+            icon: "fa-book-open-reader",
+            title: "「사랑하는 별 하나」 연별 내용 정리",
+            content: "이웃에게 어둠 속에서 빛(별)이 되어 주고, 추위 속에서 온기(꽃)가 되며, 서로의 소중한 위안이 되어 줄 동반자를 갈망하는 마음을 4연의 흐름에 맞춰 체계적으로 구성함",
+            details: [
+              "1연 (별과 같은 존재에 대한 열망): \"나도 별과 같은 사람이 될 수 있을까\" → 마음 어두운 타인의 눈을 비춰 주는 존재가 되고 싶은 소박한 소망 표출",
+              "2연 (들꽃과 같은 존재에 대한 열망): \"나도 꽃이 될 수 있을까\" → 괴롭고 쓸쓸하게 방황하는 날에 이웃에게 눈물짓듯 웃어 주는 따스한 위안 제공",
+              "3연 (별 하나를 품으려는 의지): \"가슴에 사랑하는 별 하나를 갖고 싶다\" → 고독의 순간에 다정히 찾아올 영혼의 등불을 내면에 간직하고자 하는 다짐",
+              "4연 (타인의 길을 비추는 동반자 소망): \"길을 비추어 주는 그런 사람 하나 갖고 싶다\" → 어두운 밤길을 걸어가는 타인의 길을 반짝이는 눈빛으로 씻어 길을 비춰 주겠다는 숭고한 헌신"
+            ]
+          },
+          "표현상의 특징": {
+            icon: "fa-wand-magic-sparkles",
+            title: "「사랑하는 별 하나」 표현상의 특징",
+            content: "일관된 대조적 시어의 배치와 간절함을 드러내는 통사 구조의 반복으로 시인의 따뜻한 세계관을 완성",
+            details: [
+              "상징적 시어의 활용: '별(어둠을 밝히는 희망과 빛)', '꽃(추위를 녹이는 사랑과 위로)', '길(동반자가 되어주는 헌신과 포용)'을 통해 화자가 추구하는 이타적 가치 형상화",
+              "명암 및 대조의 기법: 부정적이고 고통스러운 삶의 현실과 따뜻한 극복 가치의 아름다운 선명 대치",
+              "반복적 문장 구조 (대구): '내가 세상에 태어나 가장 ~한 일은 ~하는 ~ 하나를 ~한 일이다'의 통사 구도를 반복해 가락을 조성",
+              "종결 어미의 점층적 변화: 완료형 어미에서 능동적 의지 소망형 어미로 전개하여 헌신의 가치 깊이 강화"
+            ]
+          },
+          "형성 평가": {
+            icon: "fa-clipboard-question",
+            title: "이성선, 「사랑하는 별 하나」 - 형성 평가 (10문항)",
+            content: "시 「사랑하는 별 하나」의 숭고한 이타주의 및 정형화된 시어 대조를 분석하는 10문항",
+            isQuiz: true,
+            questions: [
+              { id: "s1", question: "이 시에서 인생의 곤란하고 힘겨운 역경을 대변하는 대조 시어는 무엇입니까?", options: ["사랑하는 길", "어두운 밤길", "눈 내리는 날", "아픔 많은 세상"], answer: 1, explanation: "대상의 앞길을 밝혀 주어야 하는 곤란한 시련의 상태를 비유한 '어두운 밤길'임" },
+              { id: "s2", question: "스스로를 낮추어 남이 편히 밟고 갈 수 있도록 다짐하는 이타적 상징 시어는?", options: ["별 하나", "가슴 속", "꽃 한 송이", "길 하나"], answer: 3, explanation: "타인의 발밑에서 동반해 주고 기댈 자리를 주는 희생물인 '길 하나'가 정답임" },
+              { id: "s3", question: "화자가 아픔이 가득 찬 삶 속에서 밤하늘을 보며 얻은 궁극적 위안이자 희망의 표상은?", options: ["별 하나", "세상", "꽃", "눈"], answer: 0, explanation: "어두운 밤하늘을 채워 밝은 등대 역할을 해주는 '별 하나'를 위안으로 삼음" },
+              { id: "s4", question: "이 시에서 '추위와 소외감'을 드러내는 시적 시어는?", options: ["어두운 밤길", "아픔 많은 세상", "눈 내리는 외로운 날", "세상에 태어난 일"], answer: 2, explanation: "계절적인 차가움과 가슴 시린 고립을 뜻하는 '눈 내리는 외로운 날'을 매핑" },
+              { id: "s5", question: "다음 중 화자가 지향하는 '따뜻하고 희생적인 대상들'로만 옳게 고른 것은?", options: ["세상, 가슴, 너", "별, 꽃, 길", "아픔, 눈, 밤길", "태어나서, 기쁜 일, 하고 싶은 일"], answer: 1, explanation: "화자의 사랑과 온기가 응축된 세 매개 가치물인 '별, 꽃, 길'을 매칭" },
+              { id: "s6", question: "시 전반부에 걸쳐 쓰인 통사 구조의 반복을 지시하는 올바른 수사법은?", options: ["반어법", "역설법", "대구법", "돈호법"], answer: 2, explanation: "유사한 통사 형태의 평형 배치를 이루어 리듬을 주는 수사법인 '대구법'으로 정리" },
+              { id: "s7", question: "종결 어미의 이타적 점층 변화를 통해 이웃을 적극 수호하겠다는 화자의 상태는?", options: ["아쉬움과 후회", "체념과 포기", "헌신의 소망과 의지 고조", "지적 호기심"], answer: 2, explanation: "종결 어미의 이타적 점층 변화를 통해 이웃을 적극 수호하겠다는 '헌신의 의지 고조'를 이끎" },
+              { id: "s8", question: "이 시의 말하는 이(화자)가 드러내는 지향 태도로 가장 알맞은 명칭은?", options: ["이기주의", "이타심과 희생 정신", "냉소적 개인주의", "기회주의적 처세"], answer: 1, explanation: "타인의 딛고 설 길이 되어 상처를 보듬고자 하는 숭고한 '이타심과 희생'으로 해석" },
+              { id: "s9", question: "이 시에서 '어두움/추위'의 심상들과 '별/꽃'의 대칭 구조가 가져다주는 효과는?", options: ["시적 의미의 복잡한 왜곡", "독자의 시선을 사로잡는 어조의 부조화", "희망적이고 따뜻한 극적 구원의 가치 극대화", "계절적 환절기의 미묘한 변화 포착"], answer: 2, explanation: "차디찬 시린 배경과 따사로운 구원 상징물의 상호 대칭 구조를 통해 주제 의식을 강렬화" },
+              { id: "s10", question: "이 시를 교훈으로 받아들여 현실 속에서 실천하려는 자세로 옳지 못한 것은?", options: ["어려운 친구에게 묵묵한 도반이 된다.", "나만 행복하면 주변 이웃은 상처받든 말든 철저히 모른 척한다.", "추운 겨울 외로운 사람들을 찾아가 온기를 전한다.", "아픔이 많은 세상일지라도 그 속에서 빛나는 사랑의 가치를 믿는다."], answer: 1, explanation: "이웃에 대한 따뜻한 위로와 동반을 권하므로 철저한 무관심 및 이기주의는 옳지 못함" }
+            ]
+          }
+        }
+      },
+      "열보다 큰 아홉": {
+        icon: "fa-hashtag",
+        subTabs: {
+          "제재 정리": {
+            icon: "fa-table-list",
+            title: "이문구, 「열보다 큰 아홉」 - 제재 정리",
+            content: "음력 9월 9일 중양절 세시 명절의 의미와 기네스북 도전 기록의 교훈을 바탕으로, 완벽의 열(10)보다 성장의 가능성이 열려 있는 아홉(9)의 가치를 성찰한 현대 수필",
+            details: [
+              "갈래: 현대 수필, 경수필 (작가의 경험과 주관적 성찰을 담은 자유로운 줄글 문학)",
+              "성격: 성찰적, 비유적, 대조적, 교훈적",
+              "제재: 숫자 아홉(9)과 열(10)의 상징성 및 중양절의 풍습",
+              "주제: 완벽함(10)을 추구하기보다 끊임없는 성장 가능성과 발전 여백(9)을 존중하는 삶의 태도",
+              "특징: 수의 상징적 개념을 '어른'과 '청소년'이라는 인간의 성장 발달 단계에 빗대어 유기적으로 표현함"
+            ]
+          },
+          "전문 해설": {
+            icon: "fa-book-open-reader",
+            title: "이문구, 「열보다 큰 아홉」 - 교과서 핵심 스마트 해설",
+            content: "수필 구절에 마우스 커서를 올리거나 터치하면 글쓴이가 전하고자 하는 불완전함의 미학과 성장의 가치를 입체적으로 학습 가능",
+            isInteractive: true,
+            author: "이문구",
+            lines: [
+              {
+                id: "n_l1",
+                stanza: "1단락",
+                text: "우리나라에서는 오랜 옛날부터 열보다 아홉을 더 사랑했습니다. 아홉 구 자가 두 번 든 음력 구 월 구 일을 중양절이라 부르며, 천 년이 넘도록 큰 명절로 정하고 쉬어 왔습니다.",
+                speaker: "선조들의 지혜와 역사적 전통 속에 깃든 미학적 배경을 존경 어린 시선으로 우러러보는 성찰적 자아",
+                symbol: "중양절 (음력 9월 9일): 우리 민족이 완벽한 수보다 모자란 수인 아홉(9)을 역사적ㆍ문화적으로 아끼고 사랑했음을 보여주는 실질적 전통 관습",
+                flow: "완벽함에 집착하지 않는 민족의 오랜 전통을 역사적 관습적 예시를 들어 증명하며 독자의 흥미와 공감을 유발"
+              },
+              {
+                id: "n_l2",
+                stanza: "2단락",
+                text: "우리의 조상들이 열보다 아홉을 더 사랑한 것은 무슨 까닭이었을까요? 모든 일에 완벽함을 기대하지 않았다, 이 세상에 완전한 것은 없다는 사실을 아주 오랜 옛날부터 익히 알고 있었다는 것입니다.",
+                speaker: "완벽주의적 피로와 세속적인 강박에서 벗어나 불완전함의 자연스러움을 긍정적으로 사색하는 철학적 자아",
+                symbol: "아홉을 더 사랑한 까닭: 세상에 영원하고 완벽한 것은 존재하지 않는다는 겸손한 인생의 순리를 따르고자 한 선조들의 성숙한 가치관",
+                flow: "'질문-대답'의 자문자답 형식을 취하여 선조들이 숫자에 부여한 겸허한 삶의 태도와 인문학적 깊이를 설득력 있게 전달"
+              },
+              {
+                id: "n_l3",
+                stanza: "3단락",
+                text: "모든 기록은 깨어지기 위해서 있다. 기록을 이룩한 것이 인간이기 때문입니다. 인간은 무한한 가능성을 타고난 존재이지만 결코 완전한 인간은 결코 어디에도 있을 수가 없다는 사실 또한 스스로 증명합니다.",
+                speaker: "인간이 지닌 한계 극복의 영웅적 잠재력과 동시에 존재하는 본질적 불완전함을 냉철하면서도 따뜻하게 직시하는 탐구적 자아",
+                symbol: "기네스북의 명언 인용: 끊임없이 한계를 갱신하는 인간의 '무한한 가능성'과, 결코 도달 불가능한 '완벽주의' 사이의 역설적 공존 상태",
+                flow: "격언 및 기네스북이라는 객관적 현대 사례를 인용하여 인간의 가능성과 불완전성이라는 존재론적 성찰로 논리를 도약"
+              },
+              {
+                id: "n_l4",
+                stanza: "4단락",
+                text: "열이란 수가 어느 하나 부족한 것 없이 모든 것을 이룬 어른과 같다면, 아홉은 앞으로 무엇이든 될 수 있는 청소년과도 같은 수인 셈입니다. 부족하고 어설픈 것이 오히려 정상입니다.",
+                speaker: "어른들의 시선이나 학업 성취 기준에 갇혀 괴로워하는 청소년(중학생) 독자들에게 불완전함의 당위성을 일깨우는 따뜻한 조력자",
+                symbol: "사람에 빗댄 수의 비유: 완벽에 고착되어 멈춘 '어른'(10)과, 비록 어설프지만 끊임없이 채워갈 발전 여지가 열려 있는 '청소년'(9)",
+                flow: "아홉과 열의 수학적 대소 관계를 인격화하여 비유함으로써, 성장의 시기에 있는 학생들에게 깊은 마음의 위안과 치유를 제공하며 여운으로 종결"
+              }
+            ]
+          },
+          "내용 정리": {
+            icon: "fa-book-open-reader",
+            title: "「열보다 큰 아홉」 교과서 수록 내용 핵심 정리",
+            content: "숫자 아홉(9)과 열(10)의 본질적 의미를 파헤치며 선조들의 지혜를 배우고 스스로의 불완전함을 성장의 원동력으로 긍정하는 흐름",
+            details: [
+              "처음 (민족의 숫자 전통 고찰): 완벽하고 완성된 수인 열(10)보다 하나가 모자란 아홉(9)을 귀히 여기고 천 년간 명절(중양절)로 기념해 온 오랜 민족사적 관습 소개",
+              "중간 (완벽에 대한 배제와 인간 본질 사색): 선조들이 아홉을 사랑한 근본 원인은 세상에 완전한 것은 없다는 이치를 겸허히 수용했기 때문이며, 기네스북 기록이 해마다 깨어짐을 통해 인간의 한계 돌파적 무한 가능성과 근원적 불완전성 규명",
+              "끝 (숫자의 인격화 비유 및 위로): 부족함이 없는 어른과 같은 수 10보다, 앞으로 무엇이든 꿈꾸고 자라날 청소년(중학생)과 같은 9의 무한한 가치를 전하며 완벽에 지친 학생들을 격려"
+            ]
+          },
+          "9와 10의 의미": {
+            icon: "fa-arrow-right-arrow-left",
+            title: "상징물 '9'와 '10'의 의미 비교 정리 (수필 기반)",
+            content: "수학적 규칙상으로는 10 > 9이지만, 내면에 깃든 발전과 주관적 성취의 질적 속성으로 인해 9 > 10이 성립하는 역설적 미학",
+            details: [
+              "숫자 '10'의 의미 (양적 성취와 완성): 이미 이룰 것을 다 이룩한 성공의 수, 어느 하나 부족함이 없이 완벽히 완성되어 더 이상의 유연성이나 성장의 기회가 멈춘 기성 상태",
+              "숫자 '9'의 의미 (질적 가능성과 불완전성): 완벽에서 단 하나가 모자라 겉보기엔 어설프고 불완전하지만, 빈틈이 존재하기에 향후 무엇이든 될 수 있고 무엇이든 채울 수 있는 성장 가능성",
+              "주제적 성찰: 완벽함(10)을 채우지 못했다고 자책하기보다, 열린 발전의 여백(9)을 사랑할 때 인간은 가장 아름답게 성장함을 교훈으로 전함"
+            ]
+          },
+          "사람에 빗댄 표현 분석": {
+            icon: "fa-wand-magic-sparkles",
+            title: "숫자를 사람에 빗대어 표현한 대조 분석",
+            content: "글쓴이는 다소 추상적인 수학적 수치를 사람의 성장 단계(어른과 청소년)에 비유(인격화)하여 학생 독자에게 친근하게 주제 의식을 전달함",
+            details: [
+              "열(10) ➔ '모든 것을 이룬 어른'에 비유: 부족함이 없이 완전하지만 고착되어 버린 고정 상태를 상징하며, 발달이 완전히 끝난 인생의 중년을 연상시킴",
+              "아홉(9) ➔ '앞으로 무엇이든 될 수 있는 청소년(중학생)'에 비유: 현재는 지식도 인격도 미숙하고 불완전하지만, 배움과 놀이의 기회가 한창 열려 있는 무한한 성장의 역동성을 상징",
+              "빗댄 표현의 궁극적 의미: 지금 완벽하지 못하고 서툴러서 외로워하고 괴로워하는 청소년들이 자신의 '불완전함(어설픔)'을 당연하고 정상적인 축복이자 과정으로 받아들이길 소망하는 의도"
+            ]
+          },
+          "형성 평가": {
+            icon: "fa-clipboard-question",
+            title: "이문구, 「열보다 큰 아홉」 - 형성 평가 (10문항)",
+            content: "수필 「열보다 큰 아홉」 교과서 수록 대목의 핵심 철학과 인격화 비유, 인용 표현을 분석하는 10문항",
+            isQuiz: true,
+            questions: [
+              { id: "n1", question: "우리 조상들이 오랜 옛날부터 '열'보다 '아홉'을 더 사랑했음을 보여주는 대표적인 세시 명절은 무엇인가요?", options: ["음력 1월 1일 설날", "음력 5월 5일 단오", "음력 8월 15일 추석", "음력 9월 9일 중양절(중굿날)"], answer: 3, explanation: "아홉 구 자가 두 번 드는 음력 9월 9일을 '중양절' 혹은 '중굿날'로 정하여 큰 명절로 기려왔음" },
+              { id: "n2", question: "조상들이 완벽한 수인 열보다 아홉을 더 사랑했던 근본적인 철학적 가치관은 무엇인가요?", options: ["농사를 더 크게 지어 부자가 되고 싶었기 때문", "이 세상에 완전한 것은 없음을 알고 모든 일에 완벽함을 기대하지 않았기 때문", "중국과의 교역에서 수량적 이득을 취하기 위함", "숫자의 미신적인 권능으로 나쁜 액운을 쫓기 위해"], answer: 1, explanation: "세상에 완벽한 인간이나 상황은 존재하지 않는다는 겸손한 현실적 통찰을 조상들이 지니고 있었기 때문임" },
+              { id: "n3", question: "글쓴이가 기네스북 기록이 해마다 끊임없이 다시 찍혀 나오고 깨어지는 근본 원인으로 제시한 것은?", options: ["기네스북 인쇄 종이의 내구성이 부족하기 때문", "기록을 이룩하고 도전하는 주체가 '인간'이기 때문", "기록을 평가하는 심판들이 매번 바뀌기 때문", "정보 통신 기술의 비약적인 속도 발전 때문"], answer: 1, explanation: "기록을 세운 것이 인간이므로, 무한한 가능성을 지닌 또 다른 인간들이 그 한계를 계속 돌파하며 깨뜨려가기 때문임" },
+              { id: "n4", question: "이 글에 기술된 '인간 존재가 지닌 이중적이고 입체적인 특성'으로 알맞게 묶인 것은?", options: ["신적인 완벽함과 동물적 야만성", "무한한 가능성과 근원적 불완전함", "도덕적 정직함과 계산적 타산성", "공동체적 협동심과 극단적 이기심"], answer: 1, explanation: "인간은 한계를 깨부수는 무한한 가능성의 소유자인 동시에, 결코 완전무결할 수는 없는 한계를 지닌 존재임" },
+              { id: "n5", question: "이 글에서 숫자 '10(열)'을 사람에 빗대어 비유(인격화)한 대상은 누구인가요?", options: ["배움이 멈춘 중학생", "모든 규칙을 완벽히 창조한 조상", "어느 하나 부족함 없이 모든 것을 이룬 '어른'", "앞으로 무엇이든 될 수 있는 청소년"], answer: 2, explanation: "10은 부족함 없이 모든 것을 이미 이룩한 상태를 상징하며, 이는 인생의 '어른'에 빗대어 묘사됨" },
+              { id: "n6", question: "이 글에서 숫자 '9(아홉)'를 사람에 빗대어 비유(인격화)한 가장 알맞은 대상은?", options: ["모든 지혜를 다 깨달은 신선", "기네스북 세계 최고 기록 보유자", "물질 만능주의에 길들여진 기성세대 어른", "앞으로 무엇이든 될 수 있는 '청소년(중학생)'"], answer: 3, explanation: "9는 완벽에서 하나가 모자란 미완성이지만 무한한 가능성을 지닌 상태로, '청소년(중학생)'에 빗대어 묘사됨" },
+              { id: "n7", question: "글쓴이가 독자인 중학생들에게 '항상 어딘가가 부족하고 어설픈 것'이 오히려 정상이라고 말한 궁극적 의도는?", options: ["공부나 노력을 게을리하여 낙제해도 된다는 방관적 타협", "완벽을 강요하는 경쟁 사회 속에서 위축된 학생들의 마음을 보듬고 위로하기 위함", "청소년은 어른보다 항상 뒤처질 수밖에 없다는 한계 규정", "수학 법칙을 철저히 불신하게 만들려는 인문주의적 반발"], answer: 1, explanation: "어설픔은 성장의 자연스러운 필수 과정이므로, 완벽하지 못하다고 스스로 자책하거나 괴로워할 필요가 없음을 격려하는 것임" },
+              { id: "n8", question: "다음 중 이 글에 설명된 숫자 '10'이 가리키는 궁극적 속성이 아닌 것은?", options: ["이미 이룰 것을 이룬 완전한 수", "성공을 나타내는 완성의 수", "부족함이 없는 완결의 수", "무한한 변화와 채움의 가능성이 살아 숨 쉬는 수"], answer: 3, explanation: "무한한 변화와 채움의 가능성은 완성된 10이 아닌, 여백이 열려 있는 9의 속성에 해당함" },
+              { id: "n9", question: "이 글의 제목 '열보다 큰 아홉'에 내포된 주된 논리적 성격과 메시지는?", options: ["단순한 수학적 오류를 비판하는 논리", "완벽주의적 결과(10)보다 성장의 가능성과 노력의 과정(9)이 지닌 역설적 위대함", "청소년이 무조건 어른보다 신체적으로 강하다는 주장", "기네스북의 등재 기준이 너무 높음을 풍자하는 내용"], answer: 1, explanation: "수리적으로는 10이 크지만, 질적 성장 가능성의 차원에서는 미완성의 9가 훨씬 크고 가치 있다는 역설을 던짐" },
+              { id: "n10", question: "이 수필을 온전히 읽고 수용한 독자가 보일 수 있는 가장 바람직한 내면적 변화는 무엇인가요?", options: ["현재의 어설픈 내 모습을 있는 그대로 사랑하며, 무한한 가능성을 믿고 꾸준히 배움에 나아간다.", "완전한 사람이 되기 위해 하루 종일 쉴 새 없이 스스로를 다그친다.", "선조들의 모든 명절 규칙을 문자 그대로 완벽히 지키려 집착한다.", "어른들의 성취는 가치 없는 것이므로 기성세대의 조언을 냉소적으로 묵살한다."], answer: 0, explanation: "불완전한 자신을 긍정적으로 소중히 대하면서 성장 잠재력을 소중하게 키워나가는 태도가 수필의 궁극적 지향점임" }
+            ]
+          }
+        }
+      }
+    };
+
+    // 현재 선택 상태 관리
+    let activeMainTab = "시의 특징";
+    let activeSubTab = "뜻";
+    let selectedAnswers = {};
+    let quizSubmitted = false;
+    let googleWebUrl = "";
+
+    // 초기화 및 이벤트 리스너 바인딩
+    window.onload = function() {
+      // 인적사항 입력 상태 감시자 바인딩
+      const inputs = ["input-grade", "input-class", "input-number", "input-name"];
+      inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateInfoStatus);
+      });
+      
+      renderMainTabs();
+      renderSubTabs();
+      renderContent();
+    };
+
+    // 인적 사항 기입 피드백 감시 처리
+    function updateInfoStatus() {
+      const grade = document.getElementById("input-grade").value;
+      const classNum = document.getElementById("input-class").value;
+      const studentNum = document.getElementById("input-number").value;
+      const name = document.getElementById("input-name").value;
+      const statusBox = document.getElementById("info-status-box");
+
+      if (grade && classNum && studentNum && name) {
+        statusBox.className = "mt-3 text-xs text-green-600 font-semibold flex items-center gap-1.5 bg-green-50/50 p-2 rounded-xl border border-green-100";
+        statusBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>확인됨: ${grade}학년 ${classNum}반 ${studentNum}번 ${name} 학생용 답안지가 준비되었습니다.</span>`;
+      } else {
+        statusBox.className = "mt-3 text-xs text-red-500 font-medium flex items-center gap-1.5";
+        statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>인적사항이 비워져 있으면 '형성 평가' 답안 제출 및 스프레드시트 기록 전송을 하실 수 없습니다.</span>`;
+      }
+    }
+
+    // 대주제 탭 버튼 렌더링
+    function renderMainTabs() {
+      const container = document.getElementById("main-tabs-container");
+      container.innerHTML = "";
+      
+      Object.keys(learningData).forEach(tabName => {
+        const tabData = learningData[tabName];
+        const isActive = activeMainTab === tabName;
+        
+        const button = document.createElement("button");
+        button.className = `flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-bold transition-all duration-300 ${
+          isActive
+            ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200 transform scale-[1.02]"
+            : "bg-gray-50 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600"
+        }`;
+        
+        button.innerHTML = `
+          <i class="fa-solid ${tabData.icon}"></i>
+          <span class="text-sm md:text-base">${tabName}</span>
+        `;
+        
+        button.onclick = () => {
+          activeMainTab = tabName;
+          activeSubTab = Object.keys(learningData[tabName].subTabs)[0]; // 첫 서브탭으로 기본값 셋팅
+          resetQuizState();
+          renderMainTabs();
+          renderSubTabs();
+          renderContent();
+        };
+        
+        container.appendChild(button);
+      });
+    }
+
+    // 세부 영역 선택 탭 (서브 버튼) 렌더링
+    function renderSubTabs() {
+      const container = document.getElementById("sub-tabs-container");
+      container.innerHTML = "";
+      
+      const subTabs = learningData[activeMainTab].subTabs;
+      
+      Object.keys(subTabs).forEach(subTabName => {
+        const isQuizTab = subTabName === "형성 평가";
+        const isActive = activeSubTab === subTabName;
+        
+        let buttonClass = `px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 border `;
+        if (isActive) {
+          buttonClass += isQuizTab 
+            ? "bg-amber-100 text-amber-800 border-amber-300 shadow-sm"
+            : "bg-indigo-100 text-indigo-800 border-indigo-300 shadow-sm";
+        } else {
+          buttonClass += isQuizTab
+            ? "bg-amber-50/50 text-amber-700 border-amber-100 hover:bg-amber-100/40"
+            : "bg-white text-gray-500 border-gray-200 hover:bg-gray-100";
+        }
+        
+        const button = document.createElement("button");
+        button.className = buttonClass;
+        button.innerText = subTabName;
+        button.onclick = () => {
+          activeSubTab = subTabName;
+          resetQuizState();
+          renderSubTabs();
+          renderContent();
+        };
+        
+        container.appendChild(button);
+      });
+    }
+
+    // 선택 누적 퀴즈 상태 청소기
+    function resetQuizState() {
+      selectedAnswers = {};
+      quizSubmitted = false;
+      document.getElementById("warning-banner").classList.add("hidden");
+    }
+
+    // 주 학습 콘텐츠 화면 및 평가 시험지 렌더링
+    function renderContent() {
+      const subTabs = learningData[activeMainTab].subTabs;
+      const currentContent = subTabs[activeSubTab] || subTabs[Object.keys(subTabs)[0]];
+
+      // 헤더 및 안내 업데이트
+      document.getElementById("content-category-path").innerText = `${activeMainTab} ㆍ ${activeSubTab}`;
+      document.getElementById("content-title").innerText = currentContent.title;
+      document.getElementById("content-brief").innerHTML = currentContent.content; // HTML 강조 서식 허용
+      
+      // 아이콘 업데이트
+      const iconContainer = document.getElementById("content-icon-container");
+      const iconElement = document.getElementById("content-icon");
+      iconElement.className = `fa-solid ${currentContent.icon}`;
+      
+      if (activeSubTab === "형성 평가") {
+        iconContainer.className = "p-3 rounded-xl bg-amber-100 text-amber-600";
+        document.getElementById("content-brief").className = "text-base md:text-lg text-gray-700 mb-8 p-4 rounded-xl leading-relaxed border border-amber-100 bg-amber-50/20";
+      } else {
+        iconContainer.className = "p-3 rounded-xl bg-indigo-50 text-indigo-600";
+        document.getElementById("content-brief").className = "text-base md:text-lg text-gray-700 mb-8 p-4 rounded-xl leading-relaxed border border-indigo-100 bg-indigo-50/40";
+      }
+
+      const detailsArea = document.getElementById("content-details-area");
+      detailsArea.innerHTML = "";
+
+      if (currentContent.isQuiz) {
+        // 형성평가 시험지 인터페이스 렌더링
+        renderQuizSheet(currentContent, detailsArea);
+      } else if (currentContent.isInteractive) {
+        // "전문 해설" 인터랙티브 패널 렌더링
+        renderInteractivePoem(currentContent, detailsArea);
+      } else {
+        // 일반 개념 카드형 리스트 렌더링
+        renderConceptList(currentContent, detailsArea);
+      }
+    }
+
+    // 전문 입체 해설 렌더링 함수
+    function renderInteractivePoem(content, container) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "grid grid-cols-1 md:grid-cols-12 gap-6 fade-in";
+
+      // 왼쪽: 시 전문 낭독판 카드
+      const leftCol = document.createElement("div");
+      leftCol.className = "md:col-span-6 p-6 rounded-2xl border border-amber-100/60 traditional-paper flex flex-col justify-center text-center shadow-sm relative";
+      
+      const pHeader = document.createElement("div");
+      pHeader.className = "mb-4 pb-3 border-b border-amber-100/80 text-amber-950";
+      pHeader.innerHTML = `
+        <h3 class="font-bold text-lg text-indigo-900">${activeMainTab}</h3>
+        <p class="text-xs text-amber-800/80 mt-1">${content.author || "작가 미상"}</p>
+      `;
+      leftCol.appendChild(pHeader);
+
+      const poemBody = document.createElement("div");
+      poemBody.className = "space-y-4 py-2";
+
+      // 오른쪽: 구절별 입체 해설 카드 미리 선언
+      const rightCol = document.createElement("div");
+      rightCol.className = "md:col-span-6 p-6 rounded-2xl border border-indigo-100/50 bg-white/80 flex flex-col justify-between shadow-sm min-h-[300px]";
+
+      const detailsBox = document.createElement("div");
+      detailsBox.id = "interactive-commentary-panel";
+      detailsBox.className = "space-y-4 transition-all duration-300 fade-in";
+      
+      // 우측 기본 상태 표출
+      resetCommentaryPanel(detailsBox);
+      rightCol.appendChild(detailsBox);
+
+      // 구절들을 렌더링하며 각각에 마우스 오버 및 터치 반응 장착
+      content.lines.forEach((line) => {
+        const lineSpan = document.createElement("div");
+        lineSpan.className = "group relative inline-block w-full py-3 px-4 rounded-xl border border-transparent hover:border-amber-200/50 hover:bg-amber-50/50 cursor-pointer transition-all duration-150 select-none text-left";
+        
+        // 연(Stanza) 또는 문단 라벨 기입하여 가로 구조 입체화
+        lineSpan.innerHTML = `
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-[10px] font-black px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded border border-indigo-100 uppercase select-none">${line.stanza}</span>
+          </div>
+          <span class="text-gray-800 font-semibold text-sm md:text-base border-b-2 border-dotted border-amber-300/60 group-hover:border-amber-500 group-hover:text-amber-950 transition-colors duration-150 leading-relaxed block">
+            ${line.text}
+          </span>
+        `;
+
+        // 마우스 호버 및 터치 작동 바인딩
+        const updateCommentary = () => {
+          // 다른 모든 구절의 활성화 테두리 제거 후 타겟만 하이라이팅
+          poemBody.querySelectorAll(".bg-amber-50").forEach(el => {
+            el.classList.remove("bg-amber-50", "border-amber-200/50");
+            el.classList.add("border-transparent");
+          });
+          lineSpan.classList.add("bg-amber-50", "border-amber-200/50");
+          lineSpan.classList.remove("border-transparent");
+
+          // 우측 패널의 해설 데이터 변경
+          detailsBox.className = "space-y-4 opacity-0 scale-95 transition-all duration-150";
+          setTimeout(() => {
+            detailsBox.className = "space-y-4 opacity-100 scale-100 transition-all duration-150";
+            
+            // 이미지 관련 수식을 지운 순수 학술 가이드 팁 제작
+            const isStarPoem = activeMainTab === "사랑하는 별 하나";
+            const isNinePoem = activeMainTab === "열보다 큰 아홉";
+            
+            let dynamicNote = "";
+            if (isStarPoem) {
+              dynamicNote = `<p class="text-[10px] leading-normal text-amber-900 font-semibold mt-1">
+                  💡 <strong>반복과 운율:</strong> 1ㆍ2연의 <strong>'~될 수 있을까'</strong>(의문형 구조)와 3ㆍ4연의 <strong>'~갖고 싶다'</strong>(소망형 구조)라는 특정 문장 및 표현 구조를 각 연별로 반복하여 대구적 리듬감(운율)을 형성하고, 세상을 밝히려는 화자의 이타적 염원을 깊이 있게 증폭함
+                 </p>`;
+            } else if (isNinePoem) {
+              dynamicNote = `<p class="text-[10px] leading-normal text-amber-900 font-semibold mt-1">
+                  💡 <strong>완벽과 성장의 대비:</strong> 수리적 대소 규칙인 10 > 9를 뛰어넘어, 완성된 존재인 어른(10)보다 끊임없이 배움과 자람이 일어나는 청소년 중학생(9)의 주관적 정성과 무한한 성장 가능성에 더 높은 가치를 부여하는 인문학적 교훈을 담아냄
+                 </p>`;
+            } else {
+              dynamicNote = `<p class="text-[11px] leading-relaxed font-semibold text-amber-950">
+                  이 대목은 <strong>봄날 대지의 수면, 정적인 물소리의 자장가, 극적인 아침 해빙, 새싹의 움틈</strong>으로 이어지는 변화를 담은 핵심 단락에 해당함
+                 </p>`;
+            }
+
+            const coreTipHtml = `
+              <div class="mt-4 p-3.5 bg-amber-50/70 border border-amber-200/60 rounded-xl text-left text-amber-950 space-y-1 fade-in">
+                <span class="text-[11px] font-bold text-amber-800 flex items-center gap-1.5">
+                  <i class="fa-solid fa-lightbulb"></i> 핵심 학습 요약 노트
+                </span>
+                ${dynamicNote}
+              </div>
+            `;
+
+            // 설명창에 전문 수록 부분(h4 블록 등)을 완벽히 삭제하고 해설만 배치
+            detailsBox.innerHTML = `
+              <div class="pb-2 border-b border-gray-100 text-left">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-black px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded border border-indigo-100 select-none">${line.stanza} 해설</span>
+                </div>
+              </div>
+              <div class="space-y-3 pt-1 text-left">
+                <!-- 화자 분석 -->
+                <div class="flex items-start gap-3">
+                  <div class="flex-shrink-0 p-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs mt-0.5">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <div>
+                    <span class="text-xs text-indigo-600 font-extrabold block">👤 화자의 상태 및 태도</span>
+                    <p class="text-xs md:text-sm text-gray-700 font-semibold mt-0.5">${line.speaker}</p>
+                  </div>
+                </div>
+                <!-- 비유와 상징 -->
+                <div class="flex items-start gap-3">
+                  <div class="flex-shrink-0 p-1.5 bg-amber-50 text-amber-600 rounded-lg text-xs mt-0.5">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  </div>
+                  <div>
+                    <span class="text-xs text-amber-600 font-extrabold block">✨ 비유 및 상징적 의미</span>
+                    <p class="text-xs md:text-sm text-gray-700 font-semibold mt-0.5">${line.symbol}</p>
+                  </div>
+                </div>
+                <!-- 시상의 전개 -->
+                <div class="flex items-start gap-3">
+                  <div class="flex-shrink-0 p-1.5 bg-rose-50 text-rose-600 rounded-lg text-xs mt-0.5">
+                    <i class="fa-solid fa-chart-line"></i>
+                  </div>
+                  <div>
+                    <span class="text-xs text-rose-600 font-extrabold block">📈 시상 전개 및 내용 흐름</span>
+                    <p class="text-xs md:text-sm text-gray-700 font-semibold mt-0.5">${line.flow}</p>
+                  </div>
+                </div>
+                ${coreTipHtml}
+              </div>
+            `;
+          }, 150);
+        };
+
+        lineSpan.addEventListener("mouseenter", updateCommentary);
+        lineSpan.addEventListener("click", updateCommentary);
+
+        poemBody.appendChild(lineSpan);
+      });
+
+      leftCol.appendChild(poemBody);
+
+      // 하단 터치 가이드문 추가
+      const pFooter = document.createElement("div");
+      pFooter.className = "mt-4 text-[10px] text-amber-800/60 leading-relaxed";
+      pFooter.innerHTML = `* 각 문단 및 연 단위로 정렬된 구절 위에 마우스를 올리거나 모바일에서 직접 클릭하시면 실시간으로 우측 입체 스마트 분석판이 자동으로 갱신됨`;
+      leftCol.appendChild(pFooter);
+
+      wrapper.appendChild(leftCol);
+      wrapper.appendChild(rightCol);
+      container.appendChild(wrapper);
+    }
+
+    // 우측 해설판 기본 안내 상태 셋팅
+    function resetCommentaryPanel(panel) {
+      panel.innerHTML = `
+        <div class="flex flex-col items-center justify-center text-center py-12 space-y-4">
+          <!-- 골드 그라데이션 불꽃 묘사 -->
+          <svg class="w-12 h-12 animate-pulse" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 L14 8 L20 10 L14 12 L12 18 L10 12 L4 10 L10 8 Z" fill="url(#panel-sparkle-grad)"/>
+            <defs>
+              <linearGradient id="panel-sparkle-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#f97316" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="space-y-1.5">
+            <h4 class="font-extrabold text-sm md:text-base text-gray-800">구절별 입체 스마트 해설판</h4>
+            <p class="text-xs text-gray-500 max-w-[250px] leading-relaxed mx-auto">
+              왼쪽의 문학 낭독판에서 연별 구절 위에 마우스를 대거나 직접 클릭하시면 화자의 태도, 비유/상징, 시상의 전개 정보가 실시간 반영됨
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 일반 개념 정리 상세 카드 그리기 (파란색 세로줄 완전 배제 및 내어쓰기 칼정렬 보존)
+    function renderConceptList(content, container) {
+      content.details.forEach(detail => {
+        const card = document.createElement("div");
+        
+        // 1. 운율에 명시된 특정 예외 구절들 검출 조건 (정형시 예외)
+        const isExemptedRythm = detail.startsWith("[대표 예시]") || 
+                                detail.startsWith("초장:") || 
+                                detail.startsWith("중장:") || 
+                                detail.startsWith("종장:");
+                                
+        // 2. 심상에 명시된 공감각적 심상 예외 구절들 검출 조건 (예시 문단)
+        const isExemptedImagery = detail.startsWith("✨ [청") || 
+                                  detail.startsWith("✨ [시");
+
+        // 3. 종류 분류 탭 내의 '서정시', '서사시', '자유시', '정형시', '산문시' 검출 조건
+        const isExemptedColons = detail.startsWith("  서정시(") || 
+                                 detail.startsWith("  서사시(") || 
+                                 detail.startsWith("  정형시(") || 
+                                 detail.startsWith("  자유시(") || 
+                                 detail.startsWith("  산문시(");
+        
+        // 4. 비유 탭 내의 예시 구절 및 지시자 검출 조건
+        const isExemptedMetaphor = detail.startsWith("직유법:") ||
+                                   detail.startsWith("은유법:") ||
+                                   detail.startsWith("의인법:") ||
+                                   detail.startsWith("🔍 예시:") ||
+                                   detail.startsWith("👉 원관념");
+        
+        if (isExemptedRythm) {
+          // 초장, 중장, 종장 등 시조 예시는 안쪽으로 들여쓰기 정렬하며 파란색 세로줄 없음
+          card.className = "fade-in flex gap-3 bg-gray-50/80 p-4 rounded-xl border border-gray-100 hover:border-indigo-100/70 transition-all duration-200 shadow-sm hover:shadow-md pl-10 md:pl-12 text-left";
+          
+          const textContainer = document.createElement("p");
+          textContainer.className = "text-gray-700 leading-relaxed text-sm md:text-base w-full";
+          
+          const colonIndex = detail.indexOf(':');
+          if (colonIndex !== -1) {
+            const keyword = detail.substring(0, colonIndex + 1);
+            const description = detail.substring(colonIndex + 1);
+            textContainer.innerHTML = `<strong class="text-indigo-950 font-bold bg-indigo-50/70 px-1.5 py-0.5 rounded mr-1">${keyword}</strong>${description}`;
+          } else {
+            textContainer.innerText = detail;
+          }
+          card.appendChild(textContainer);
+          
+        } else if (isExemptedColons) {
+          // 세로 시작점을 부모 타이틀의 첫 글자와 일치시킴 (파란 세로줄 일체 없음)
+          card.className = "fade-in flex bg-gray-50/80 p-4 rounded-xl border border-gray-100 hover:border-indigo-100/70 transition-all duration-200 shadow-sm hover:shadow-md ml-6 md:ml-8 text-left";
+          
+          const cleanDetail = detail.trim();
+          const colonIndex = cleanDetail.indexOf(':');
+          
+          if (colonIndex !== -1) {
+            const keyword = cleanDetail.substring(0, colonIndex + 1); // "서정시(抒情詩):"
+            const description = cleanDetail.substring(colonIndex + 1); // " 개인의 주관적인..."
+            
+            // 텍스트 정렬을 위해 Flexbox와 고정 레이아웃 가미하여 완벽한 내어쓰기 보존
+            card.innerHTML = `
+              <div class="flex flex-col sm:flex-row items-start w-full gap-2 sm:gap-0">
+                <span class="flex-shrink-0 w-full sm:w-36 text-indigo-950 font-black bg-indigo-50/70 px-2 py-0.5 rounded select-none text-sm md:text-base">${keyword}</span>
+                <span class="flex-1 text-gray-700 leading-relaxed text-sm md:text-base pl-1 sm:pl-2 border-l-0 sm:border-l-2 border-indigo-100">${description}</span>
+              </div>
+            `;
+          } else {
+            const textContainer = document.createElement("p");
+            textContainer.className = "text-gray-700 leading-relaxed text-sm md:text-base w-full";
+            textContainer.innerText = cleanDetail;
+            card.appendChild(textContainer);
+          }
+
+        } else if (isExemptedImagery) {
+          // 공감각적 예시 정렬 (Hanging Indent) 적용 카드
+          card.className = "fade-in flex bg-gray-50/80 p-4 rounded-xl border border-gray-100 hover:border-indigo-100/70 transition-all duration-200 shadow-sm hover:shadow-md ml-6 md:ml-8 text-left";
+          
+          const bracketIndex = detail.indexOf('[');
+          const leftPart = detail.substring(0, bracketIndex); // "✨ "
+          const rightPart = detail.substring(bracketIndex); // "[청각의 시각화] 예시 1: ..."
+          
+          const closingBracketIndex = rightPart.indexOf(']');
+          const tagPart = rightPart.substring(0, closingBracketIndex + 1); // "[청각의 시각화]"
+          const descPart = rightPart.substring(closingBracketIndex + 1); // " 예시 1: ..."
+          
+          card.innerHTML = `
+            <div class="flex items-start w-full">
+              <!-- 왼쪽에는 이모지만 분리하여 배치하여 본문 전체 시작점이 '['의 시작과 완전히 일치하도록 정렬 -->
+              <span class="flex-shrink-0 text-indigo-500 font-bold select-none mr-1">${leftPart}</span>
+              <!-- 오른쪽은 '[' 문자로 완벽히 정렬되며 줄바꿈이 생겨도 두 번째 줄부터 완벽히 내어쓰기 처리 -->
+              <span class="flex-1 text-gray-700 leading-relaxed text-sm md:text-base" style="padding-left: 1.15rem; text-indent: -1.15rem;">
+                <strong class="text-indigo-950 font-bold bg-indigo-50/70 px-1 py-0.5 rounded mr-1">${tagPart}</strong>${descPart}
+              </span>
+            </div>
+          `;
+        } else if (isExemptedMetaphor) {
+          // 비유 탭 전용으로 가로 폭을 정밀하게 좁힌 카드형 레이아웃 구현 (용어 설명과의 입체감 부여)
+          let cardClass = "fade-in flex bg-gray-50/80 p-4 rounded-xl border border-gray-100 hover:border-indigo-100/70 transition-all duration-200 shadow-sm hover:shadow-md text-left ";
+          
+          if (detail.startsWith("직유법:") || detail.startsWith("은유법:") || detail.startsWith("의인법:")) {
+            cardClass += "pl-6 font-bold";
+            card.className = cardClass;
+            const textContainer = document.createElement("p");
+            textContainer.className = "text-indigo-900 leading-relaxed text-base md:text-lg w-full";
+            const colonIdx = detail.indexOf(':');
+            textContainer.innerHTML = `<span class="bg-indigo-100/80 text-indigo-800 font-extrabold px-3 py-1 rounded-lg mr-2">${detail.substring(0, colonIdx)}</span> ${detail.substring(colonIdx + 1)}`;
+            card.appendChild(textContainer);
+          } else if (detail.startsWith("🔍 예시:")) {
+            cardClass += "w-11/12 ml-auto bg-white/60 border-l-0";
+            card.className = cardClass;
+            const textContainer = document.createElement("p");
+            textContainer.className = "text-gray-800 leading-relaxed text-sm md:text-base w-full italic font-medium";
+            textContainer.innerHTML = detail;
+            card.appendChild(textContainer);
+          } else if (detail.startsWith("👉 원관념")) {
+            cardClass += "w-11/12 ml-auto bg-indigo-50/20 border-l-0";
+            card.className = cardClass;
+            const textContainer = document.createElement("p");
+            textContainer.className = "text-indigo-950 font-semibold leading-relaxed text-xs md:text-sm w-full";
+            textContainer.innerHTML = `<i class="fa-solid fa-arrow-right-long text-indigo-500 mr-1.5"></i> ${detail.substring(2)}`;
+            card.appendChild(textContainer);
+          } else {
+            card.className = cardClass + "pl-6";
+            const textContainer = document.createElement("p");
+            textContainer.className = "text-gray-700 text-sm md:text-base w-full";
+            textContainer.innerHTML = detail;
+            card.appendChild(textContainer);
+          }
+        } else {
+          // 일반 설명란 카드 그리기 (골드 그라데이션 불꽃 적용 및 파란 세로줄 배제)
+          card.className = "fade-in flex gap-3 bg-gray-50/80 p-4 rounded-xl border border-gray-100 hover:border-indigo-100/70 transition-all duration-200 shadow-sm hover:shadow-md text-left";
+          
+          // 그라데이션 SVG 아이콘 삽입 (골드 불꽃 효과)
+          const iconSpan = document.createElement("span");
+          iconSpan.className = "mt-1 flex-shrink-0";
+          iconSpan.innerHTML = `
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2 L14 8 L20 10 L14 12 L12 18 L10 12 L4 10 L10 8 Z" fill="url(#bullet-sparkle-grad-com)"/>
+              <defs>
+                <linearGradient id="bullet-sparkle-grad-com" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="100%" stop-color="#f97316" />
+                </linearGradient>
+              </defs>
+            </svg>
+          `;
+          card.appendChild(iconSpan);
+
+          const textContainer = document.createElement("p");
+          textContainer.className = "text-gray-700 leading-relaxed text-sm md:text-base w-full";
+
+          const colonIndex = detail.indexOf(':');
+          
+          // 들여쓰기를 위한 공백 보존용 스타일 추가
+          if (detail.startsWith("  ")) {
+            textContainer.style.paddingLeft = "1.5rem";
+          }
+
+          if (colonIndex !== -1) {
+            const keyword = detail.substring(0, colonIndex + 1);
+            const description = detail.substring(colonIndex + 1);
+            textContainer.innerHTML = `<strong class="text-indigo-950 font-bold bg-indigo-50/70 px-1.5 py-0.5 rounded mr-1">${keyword}</strong>${description}`;
+          } else {
+            textContainer.innerHTML = detail; // HTML 포맷 허용
+          }
+          card.appendChild(textContainer);
+        }
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 평가용 10문항 시험지와 채점지 그리기
+    function renderQuizSheet(content, container) {
+      content.questions.forEach((q, idx) => {
+        const qBox = document.createElement("div");
+        qBox.className = "fade-in p-5 md:p-6 bg-gray-50 rounded-2xl border border-gray-100 space-y-4";
+        
+        // 문항 발문 제목
+        const qTitle = document.createElement("div");
+        qTitle.className = "flex gap-2 text-left";
+        qTitle.innerHTML = `<span class="font-bold text-lg text-indigo-600 flex-shrink-0">Q${idx + 1}.</span>
+                            <h3 class="font-bold text-gray-800 text-base md:text-lg leading-relaxed">${q.question}</h3>`;
+        qBox.appendChild(qTitle);
+
+        // 보기 선택 옵션 그릇
+        const optContainer = document.createElement("div");
+        optContainer.className = "grid grid-cols-1 gap-2 pl-2";
+
+        q.options.forEach((option, oIdx) => {
+          const isSelected = selectedAnswers[q.id] === oIdx;
+          const isCorrectAnswer = q.answer === oIdx;
+
+          let btnClass = "flex items-center text-left w-full px-4 py-3 border rounded-xl text-sm transition-all ";
+          
+          if (quizSubmitted) {
+            if (isSelected) {
+              btnClass += isCorrectAnswer 
+                ? "bg-green-100 border-green-400 text-green-800 font-semibold"
+                : "bg-red-100 border-red-300 text-red-800";
+            } else if (isCorrectAnswer) {
+              btnClass += "bg-green-50 border-green-200 text-green-700 font-semibold";
+            } else {
+              btnClass += "bg-white border-gray-200 text-gray-400";
+            }
+          } else if (isSelected) {
+            btnClass += "bg-indigo-50 border-indigo-400 text-indigo-800 font-semibold shadow-sm";
+          } else {
+            btnClass += "bg-white hover:bg-gray-100 border-gray-200 text-gray-700";
+          }
+
+          const optBtn = document.createElement("button");
+          optBtn.className = btnClass;
+          optBtn.disabled = quizSubmitted;
+          optBtn.innerHTML = `<span class="w-6 h-6 mr-3 flex-shrink-0 flex items-center justify-center rounded-full border text-xs bg-gray-50 text-gray-500 font-bold">${oIdx + 1}</span>
+                              <span>${option}</span>`;
+          
+          optBtn.onclick = () => {
+            selectedAnswers[q.id] = oIdx;
+            renderQuizSheet(content, container); // 화면 업데이트 갱신
+          };
+
+          optContainer.appendChild(optBtn);
+        });
+        qBox.appendChild(optContainer);
+
+        // 결과 제출 후 해설 카드 (파란 세로선 제거 완료)
+        if (quizSubmitted) {
+          const isCorrect = selectedAnswers[q.id] === q.answer;
+          const expBox = document.createElement("div");
+          expBox.className = `p-4 rounded-xl text-sm leading-relaxed text-left ${isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`;
+          expBox.innerHTML = `<div class="font-bold flex items-center gap-1.5 mb-1">
+                                ${isCorrect ? "🎉 정답" : "❌ 오답"}
+                                <span class="text-slate-500 font-normal"> (정답: ${q.answer + 1}번)</span>
+                              </div>
+                              <p class="mt-1 text-slate-600 font-medium"><strong class="text-slate-800">[해설]</strong> ${q.explanation}</p>`;
+          qBox.appendChild(expBox);
+        }
+
+        container.appendChild(qBox);
+      });
+
+      // 시험 제출부 및 결과 컨트롤러 섹션 패널
+      const ctrlPanel = document.createElement("div");
+      ctrlPanel.className = "flex flex-col items-center justify-center py-6 border-t border-gray-100 gap-6";
+
+      if (!quizSubmitted) {
+        // 제출 버튼 활성화 조건 체크
+        const answeredCount = Object.keys(selectedAnswers).length;
+        const totalCount = content.questions.length;
+        const isCompleted = answeredCount === totalCount;
+
+        const submitBtn = document.createElement("button");
+        submitBtn.className = `px-8 py-3.5 rounded-2xl font-bold transition shadow-md active:scale-95 text-base ${
+          // 모든 문항에 답안을 체크했을 때만 누를 수 있도록 설정
+          isCompleted 
+            ? "bg-amber-500 text-white hover:bg-amber-600" 
+            : "bg-gray-200 text-gray-400 cursor-not-allowed"
+        }`;
+        submitBtn.innerText = `채점 및 답안 제출하기 (${answeredCount} / ${totalCount})`;
+        
+        submitBtn.onclick = () => {
+          const grade = document.getElementById("input-grade").value;
+          const classNum = document.getElementById("input-class").value;
+          const studentNum = document.getElementById("input-number").value;
+          const name = document.getElementById("input-name").value;
+
+          if (!grade || !classNum || !studentNum || !name) {
+            const banner = document.getElementById("warning-banner");
+            document.getElementById("warning-text").innerText = "형성 평가를 제출하려면 먼저 상단의 인적 사항(학년, 반, 번호, 이름)을 모두 기재해 주세요!";
+            banner.classList.remove("hidden");
+            window.scrollTo({ top: banner.offsetTop - 50, behavior: 'smooth' });
+            return;
+          }
+          
+          document.getElementById("warning-banner").classList.add("hidden");
+          quizSubmitted = true;
+          renderContent();
+        };
+
+        ctrlPanel.appendChild(submitBtn);
+      } else {
+        // 결과 성적표 배지 영역
+        const scoreInfo = getScoreInfo(content.questions);
+        const reportCard = document.createElement("div");
+        reportCard.className = "bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-3xl border border-amber-100 w-full max-w-lg mx-auto shadow-sm space-y-3 text-center";
+        
+        const gradeVal = document.getElementById("input-grade").value;
+        const classVal = document.getElementById("input-class").value;
+        const numVal = document.getElementById("input-number").value;
+        const nameVal = document.getElementById("input-name").value;
+
+        reportCard.innerHTML = `
+          <i class="fa-solid fa-trophy text-amber-500 text-4xl mb-1"></i>
+          <h4 class="font-extrabold text-xl text-amber-950">형성 평가 분석 성적표</h4>
+          <div class="grid grid-cols-2 gap-2 bg-white/80 p-3 rounded-xl border border-amber-50 text-left text-xs text-gray-600">
+            <div>ㆍ <span class="font-bold">평가 대상자:</span> ${gradeVal}학년 ${classVal}반 ${numVal}번 ${nameVal}</div>
+            <div>ㆍ <span class="font-bold">학습 영역:</span> ${activeMainTab}</div>
+            <div>ㆍ <span class="font-bold">맞춘 문항:</span> ${scoreInfo.correctCount} / ${scoreInfo.total} 문항</div>
+            <div>ㆍ <span class="font-bold">성공 성취율:</span> ${scoreInfo.percent}%</div>
+          </div>
+          <div class="text-3xl font-black text-amber-600">${scoreInfo.percent} 점</div>
+        `;
+        ctrlPanel.appendChild(reportCard);
+
+        // 구글 스프레드시트 수집 패널 렌더링
+        const dataCollectBox = document.createElement("div");
+        dataCollectBox.className = "bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100/60 w-full max-w-lg mx-auto space-y-4 text-center";
+        dataCollectBox.innerHTML = `
+          <div class="flex items-center gap-2 justify-center text-indigo-900 font-bold text-sm">
+            <i class="fa-solid fa-database text-indigo-600"></i>
+            <span>구글 스프레드시트 결과 수집 및 기록</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="collect-buttons"></div>
+          <div id="collect-status-text" class="p-3 hidden text-xs rounded-xl border font-semibold leading-relaxed"></div>
+        `;
+        
+        ctrlPanel.appendChild(dataCollectBox);
+        container.appendChild(ctrlPanel);
+
+        // 연동 수집용 서브 버튼 생성기 호출
+        renderCollectButtons(scoreInfo, content.questions);
+      }
+
+      container.appendChild(ctrlPanel);
+    }
+
+    // 결과 전송/수집 버튼 렌더링
+    function renderCollectButtons(scoreInfo, questions) {
+      const btnWrapper = document.getElementById("collect-buttons");
+      
+      // 1. 스프레드시트 엑셀용 TSV 복사 버튼
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "flex flex-col items-center justify-center p-3.5 bg-white border border-indigo-200 rounded-2xl hover:bg-indigo-50 hover:border-indigo-400 transition group";
+      copyBtn.innerHTML = `
+        <i class="fa-solid fa-copy text-indigo-600 mb-1 group-hover:scale-110 transition text-lg"></i>
+        <span class="text-xs font-bold text-gray-800">스프레드시트용 복사</span>
+        <span class="text-[10px] text-gray-500 mt-1">Ctrl+V로 시트에 바로 붙여넣기</span>
+      `;
+      copyBtn.onclick = () => {
+        executeTsvCopy(scoreInfo, questions);
+      };
+
+      // 2. Apps Script Webhook 연동 전송 설정 토글 버튼
+      const sendBtn = document.createElement("button");
+      sendBtn.className = "flex flex-col items-center justify-center p-3.5 bg-white border border-indigo-200 rounded-2xl hover:bg-indigo-50 hover:border-indigo-400 transition group";
+      sendBtn.innerHTML = `
+        <i class="fa-solid fa-paper-plane text-indigo-600 mb-1 group-hover:scale-110 transition text-lg"></i>
+        <span class="text-xs font-bold text-gray-800">구글 자동 연동 설정</span>
+        <span class="text-[10px] text-gray-500 mt-1">Apps Script Webhook 주소 입력</span>
+      `;
+      sendBtn.onclick = () => {
+        toggleWebhookSettings(scoreInfo, questions);
+      };
+
+      btnWrapper.appendChild(copyBtn);
+      btnWrapper.appendChild(sendBtn);
+
+      // 3. 다시 풀기 버튼을 담는 아래 정렬부 추가
+      const restartBtn = document.createElement("button");
+      restartBtn.className = "inline-flex items-center gap-2 px-6 py-2.5 bg-gray-600 text-white font-semibold rounded-xl text-sm hover:bg-gray-700 transition active:scale-95 shadow-sm mt-4";
+      restartBtn.innerHTML = `<i class="fa-solid fa-rotate-left"></i> 다시 풀어보기`;
+      restartBtn.onclick = handleQuizReset;
+      
+      btnWrapper.parentNode.appendChild(restartBtn);
+    }
+
+    // 복사 동작 로직
+    function executeTsvCopy(scoreInfo, questions) {
+      const timestamp = new Date().toLocaleString("ko-KR");
+      const grade = document.getElementById("input-grade").value;
+      const classNum = document.getElementById("input-class").value;
+      const studentNum = document.getElementById("input-number").value;
+      const name = document.getElementById("input-name").value;
+
+      // 엑셀, 스프레드시트 복사용 데이터 정렬 포맷
+      const headers = "제출시각\t영역\t학년\t반\t번호\t이름\t맞춘개수\t총문항수\t총점\t상세응답(문항ID:선택값:정오)\n";
+      const detailedString = questions.map(q => {
+        const selVal = selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] + 1 : "미응답";
+        const isRight = selectedAnswers[q.id] === q.answer ? "O" : "X";
+        return `[${q.id}번-선택:${selVal}번(${isRight})]`;
+      }).join(" | ");
+
+      const rowData = `${timestamp}\t${activeMainTab}\t${grade}\t${classNum}\t${studentNum}\t${name}\t${scoreInfo.correctCount}\t${scoreInfo.total}\t${scoreInfo.percent}점\t${detailedString}`;
+      
+      const fullText = headers + rowData;
+
+      // 임시 텍스트 에어리어를 통한 안전한 클립보드 복사 기법 구현
+      const tempArea = document.createElement("textarea");
+      tempArea.value = fullText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      
+      const statusText = document.getElementById("collect-status-text");
+      try {
+        document.execCommand('copy');
+        statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-green-50 text-green-800 border-green-200 mt-3 block";
+        statusText.innerText = "✓ 성공적으로 복사되었습니다! 구글 스프레드시트나 엑셀의 빈 칸에 커서를 두고 [Ctrl + V]를 눌러 붙여넣기 하세요.";
+      } catch (err) {
+        statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-red-50 text-red-800 border-red-200 mt-3 block";
+        statusText.innerText = "복사 동작이 차단되었습니다. 브라우저 설정을 확인하세요.";
+      }
+      document.body.removeChild(tempArea);
+    }
+
+    // Webhook API 주소 기입 토글 UI 렌더링
+    function toggleWebhookSettings(scoreInfo, questions) {
+      // 기존에 셋팅창이 있으면 토글 비활성화
+      const existBox = document.getElementById("webhook-setting-box");
+      if (existBox) {
+        existBox.remove();
+        return;
+      }
+
+      const box = document.createElement("div");
+      box.id = "webhook-setting-box";
+      box.className = "p-3 bg-white rounded-xl border border-indigo-100 text-left space-y-2 mt-4 fade-in";
+      box.innerHTML = `
+        <label class="block text-[11px] font-bold text-gray-500">Google Apps Script Web Webhook URL 주소</label>
+        <div class="flex gap-2">
+          <input
+            type="text"
+            id="webhook-url-input"
+            placeholder="https://script.google.com/macros/s/.../exec"
+            value="${googleWebUrl}"
+            class="flex-1 px-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+          <button id="webhook-send-btn" class="bg-indigo-600 text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
+            전송
+          </button>
+        </div>
+        <span class="text-[9px] text-gray-400 block leading-normal">
+          ※ 구글 Apps Script로 배포 완료하여 발급받은 웹 앱의 실행 URL을 여기에 붙여넣은 뒤 전송 버튼을 누르면 스프레드시트에 자동 업로드됩니다.
+        </span>
+      `;
+
+      const statusBox = document.getElementById("collect-status-text");
+      statusBox.parentNode.insertBefore(box, statusBox);
+
+      // 입력 이벤트 연동
+      document.getElementById("webhook-url-input").addEventListener("input", (e) => {
+        googleWebUrl = e.target.value;
+      });
+
+      // API 전송 발동 버튼 바인딩
+      document.getElementById("webhook-send-btn").onclick = () => {
+        executeDirectSend(scoreInfo, questions);
+      };
+    }
+
+    // Apps Script API Endpoint Webhook 호출 실행 로직
+    async function executeDirectSend(scoreInfo, questions) {
+      const statusText = document.getElementById("collect-status-text");
+      
+      if (!googleWebUrl) {
+        statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-red-50 text-red-800 border-red-200 mt-3 block";
+        statusText.innerText = "경고: 먼저 입력창에 올바른 구글 Apps Script 웹 앱 배포 실행 주소를 입력해 주시기 바랍니다.";
+        return;
+      }
+
+      statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-indigo-50 text-indigo-800 border-indigo-200 mt-3 block";
+      statusText.innerText = "구글 스프레드시트로 전송 데이터를 패키징하여 업로드 중입니다...";
+
+      const grade = document.getElementById("input-grade").value;
+      const classNum = document.getElementById("input-class").value;
+      const studentNum = document.getElementById("input-number").value;
+      const name = document.getElementById("input-name").value;
+
+      const detailedAnswers = questions.map(q => {
+        return {
+          questionId: q.id,
+          userAnswer: selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] + 1 : "미응답",
+          isCorrect: selectedAnswers[q.id] === q.answer
+        };
+      });
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        topic: activeMainTab,
+        grade,
+        classNum,
+        studentNum,
+        name,
+        correctCount: scoreInfo.correctCount,
+        total: scoreInfo.total,
+        scorePercent: scoreInfo.percent,
+        details: JSON.stringify(detailedAnswers)
+      };
+
+      try {
+        await fetch(googleWebUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+        statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-green-50 text-green-800 border-green-200 mt-3 block";
+        statusText.innerText = "✓ 구글 스프레드시트에 채점 결과 전송 요청이 성공적으로 완료되었습니다! 스프레드시트를 조회해 보세요.";
+      } catch (err) {
+        statusText.className = "p-3 text-xs rounded-xl border font-semibold leading-relaxed bg-red-50 text-red-800 border-red-200 mt-3 block";
+        statusText.innerText = "전송 중 예기치 않은 네트워크 지연이나 에러가 발생했습니다. '스프레드시트용 복사' 기능을 활용해 주시기 바랍니다.";
+      }
+    }
+
+    // 점수 정보 가져오기 헬퍼 함수
+    function getScoreInfo(questions) {
+      let correctCount = 0;
+      questions.forEach(q => {
+        if (selectedAnswers[q.id] === q.answer) {
+          correctCount++;
+        }
+      });
+      const total = questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { correctCount, total, percent };
+    }
+
+    // 퀴즈 초기화 기능
+    function handleQuizReset() {
+      resetQuizState();
+      renderContent();
+    }
+  </script>
+</body>
+</html>
