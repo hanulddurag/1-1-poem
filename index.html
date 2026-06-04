@@ -133,7 +133,7 @@
         </div>
       </div>
       
-      <!-- 핵심 요약 내용 (파란색 세로 강조선 제거 완료) -->
+      <!-- 핵심 요약 내용 -->
       <div class="text-base md:text-lg text-gray-700 mb-8 p-4 rounded-xl leading-relaxed border border-indigo-100 bg-indigo-50/40" id="content-brief">
         기본 요약 설명글이 여기에 들어갑니다.
       </div>
@@ -202,10 +202,10 @@
             title: "시의 종류",
             content: "개인의 마음을 노래하는 '내용상의 분류'와 외형적 형식의 유무에 따른 '형식상의 분류'로 구분",
             details: [
-              "📌 내용상의 분류:",
+              "📌 [주요 시어의 의미]",
               "  서정시(抒情詩): 개인의 주관적인 감정이나 사상을 정제된 언어로 섬세하게 노래한 시 (대표 제재: 이성선, 「사랑하는 별 하나」)",
               "  서사시(抒사詩): 역사적 사건, 민족적 과업, 혹은 영웅적 활약상을 객관적이고 이야기 구조로 길게 서술한 시 (대표 제재: 이규보, 「동명왕편」)",
-              "📌 형식상의 분류:",
+              "📌 [연의 내용]",
               "  정형시(定型詩): 시구의 글자 수(음수율)나 호흡의 마디(음보율)가 외형적인 제약 속에 고정된 시 (대표 제재: 우리나라 고전 문학 '시조')",
               "  자유시(自由시): 일정한 정형적 규칙에 얽매이지 않고, 행 및 연을 자유롭게 배열하여 내재율을 활용한 현대시 (대표 제재: 오규원, 「3월」)",
               "  산문시(散文詩): 행의 줄 바꿈이 거의 없거나 아예 산문(줄글)처럼 연달아 쓰되 내부에 비유와 리듬을 품은 시"
@@ -1015,7 +1015,7 @@
             cardClass += "w-11/12 ml-auto bg-indigo-50/20 border-l-0";
             card.className = cardClass;
             const textContainer = document.createElement("p");
-            textContainer.className = "text-indigo-950 font-semibold leading-relaxed text-xs md:text-sm w-full";
+            textContainer.className = "text-indigo-955 font-semibold leading-relaxed text-xs md:text-sm w-full";
             textContainer.innerHTML = `<i class="fa-solid fa-arrow-right-long text-indigo-500 mr-1.5"></i> ${detail.substring(2)}`;
             card.appendChild(textContainer);
           } else {
@@ -1027,7 +1027,6 @@
           }
         } else {
           // 일반 설명란 카드 그리기 (골드 그라데이션 불꽃 적용 및 파란 세로줄 배제)
-          // 들여쓰기를 원하고 용어-설명이 나뉘는 경우 내어쓰기(Hanging Indent) 레이아웃 적극 적용
           const cleanDetail = detail.trim();
           const colonIndex = cleanDetail.indexOf(':');
 
@@ -1156,7 +1155,7 @@
         });
         qBox.appendChild(optContainer);
 
-        // 결과 제출 후 해설 카드 (파란 세로선 제거 완료)
+        // 결과 제출 후 해설 카드
         if (quizSubmitted) {
           const isCorrect = selectedAnswers[q.id] === q.answer;
           const expBox = document.createElement("div");
@@ -1184,7 +1183,6 @@
 
         const submitBtn = document.createElement("button");
         submitBtn.className = `px-8 py-3.5 rounded-2xl font-bold transition shadow-md active:scale-95 text-base ${
-          // 모든 문항에 답안을 체크했을 때만 누를 수 있도록 설정
           isCompleted 
             ? "bg-amber-500 text-white hover:bg-amber-600" 
             : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -1297,7 +1295,7 @@
       btnWrapper.parentNode.appendChild(restartBtn);
     }
 
-    // 복사 동작 로직
+    // 복사 동작 로직 (문항별 완벽 분배 TSV 포맷팅)
     function executeTsvCopy(scoreInfo, questions) {
       const timestamp = new Date().toLocaleString("ko-KR");
       const grade = document.getElementById("input-grade").value;
@@ -1305,15 +1303,21 @@
       const studentNum = document.getElementById("input-number").value;
       const name = document.getElementById("input-name").value;
 
-      // 엑셀, 스프레드시트 복사용 데이터 정렬 포맷
-      const headers = "제출시각\t영역\t학년\t반\t번호\t이름\t맞춘개수\t총문항수\t총점\t상세응답(문항ID:선택값:정오)\n";
-      const detailedString = questions.map(q => {
+      // 엑셀, 스프레드시트 칼럼별 복사용 헤더 구성 (개별 문항의 응답과 정오 칼럼 생성)
+      let headers = "제출시각\t평가영역\t학년\t반\t번호\t이름\t총점";
+      for (let i = 1; i <= 10; i++) {
+        headers += `\tQ${i}응답\tQ${i}정오`;
+      }
+      headers += "\n";
+
+      // 개별 데이터 행 구성
+      let rowData = `${timestamp}\t${activeMainTab}\t${grade}\t${classNum}\t${studentNum}\t${name}\t${scoreInfo.percent}점`;
+      
+      questions.forEach(q => {
         const selVal = selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] + 1 : "미응답";
         const isRight = selectedAnswers[q.id] === q.answer ? "O" : "X";
-        return `[${q.id}번-선택:${selVal}번(${isRight})]`;
-      }).join(" | ");
-
-      const rowData = `${timestamp}\t${activeMainTab}\t${grade}\t${classNum}\t${studentNum}\t${name}\t${scoreInfo.correctCount}\t${scoreInfo.total}\t${scoreInfo.percent}점\t${detailedString}`;
+        rowData += `\t${selVal}\t${isRight}`;
+      });
       
       const fullText = headers + rowData;
 
@@ -1398,9 +1402,9 @@
       const studentNum = document.getElementById("input-number").value;
       const name = document.getElementById("input-name").value;
 
+      // 각 개별 문항의 응답 번호와 정오답 여부 패키징
       const detailedAnswers = questions.map(q => {
         return {
-          questionId: q.id,
           userAnswer: selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] + 1 : "미응답",
           isCorrect: selectedAnswers[q.id] === q.answer
         };
@@ -1413,10 +1417,8 @@
         classNum,
         studentNum,
         name,
-        correctCount: scoreInfo.correctCount,
-        total: scoreInfo.total,
         scorePercent: scoreInfo.percent,
-        details: JSON.stringify(detailedAnswers)
+        answers: detailedAnswers
       };
 
       try {
