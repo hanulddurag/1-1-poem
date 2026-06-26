@@ -185,13 +185,18 @@
             icon: "fa-bars-staggered",
             title: "시의 종류 분류 체계",
             content: "시는 크게 개인의 마음을 노래하는 내용상의 분류와 외형적 형식의 유무에 따른 형식상의 분류로 구획",
-            details: [
-              "서정시 (抒情詩): 개인의 생각과 주관적인 감정을 압축 표현 (예: 이성선의 「사랑하는 별 하나」)",
-              "서사시 (敍사시): 역사적 사건이나 영웅의 일대기를 객관적 서술 (예: 이규보의 「동명왕편」)",
-              "정형시 (定型詩): 음수율이나 음보율 등 엄격한 형식적 틀과 규칙적 운율 지님 (예: 전통 시조)",
-              "자유시 (自由詩): 형식에 얽매이지 않고 자유롭게 행과 연을 배열하여 리듬을 형성 (예: 오규원의 「3월」)",
-              "산문시 (산문시): 행 구분 없이 줄글(산문) 형식으로 서술하되 비유와 내재율을 활용"
-            ]
+            isClassified: true,
+            details: {
+              "content": [
+                "서정시 (抒情詩): 개인의 생각 and 주관적인 감정을 압축 표현 (예: 이성선의 「사랑하는 별 하나」)",
+                "서사시 (敍사시): 역사적 사건이나 영웅의 일대기를 객관적 서술 (예: 이규보의 「동명왕편」)"
+              ],
+              "form": [
+                "정형시 (定型詩): 음수율이나 음보율 등 엄격한 형식적 틀과 규칙적 운율 지님 (예: 전통 시조)",
+                "자유시 (自由詩): 형식에 얽매이지 않고 자유롭게 행과 연을 배열하여 리듬을 형성 (예: 오규원의 「3월」)",
+                "산문시 (산문시): 행 구분 없이 줄글(산문) 형식으로 서술하되 비유와 내재율을 활용"
+              ]
+            }
           },
           "비유": {
             icon: "fa-arrows-split-up-and-left",
@@ -310,7 +315,7 @@
             details: [
               "갈래: 자유시, 서정시",
               "성격: 감각적, 생동적",
-              "제재: 3월의 산과 들",
+              "제재: 3월 of 산과 들",
               "주제: 봄이 오는 산과 들의 생동감",
               "특징: 겨울에서 봄으로 넘어가는 계절의 변화를 참신한 비유를 통해 표현"
             ]
@@ -376,7 +381,7 @@
               "📌 [연의 내용]",
               "1-2연: 봄눈이 펑펑 내리며 하얗게 덮여 깊은 잠에 잠긴 산과 들의 고요하고 정적인 상태",
               "3-4연: 골짜기 사이로 졸졸 흐르는 나직한 물소리를 자장가 삼아 평화롭게 흘러가는 시간의 흐름",
-              "5-6연: 아침 햇살이 비추며 산과 들의 눈(이불)을 순식간에 녹여 걷어내는 극적인 해빙의 전환점",
+              "5-6연: 아침 햇살이 비추며 산과 들이 눈(이불)을 순식간에 녹여 걷어내는 극적인 해빙의 전환점",
               "7-8연: 눈이 녹아 걷힌 자리에 마치 잠자리에서 힘차게 일어난 아이들처럼 역동적으로 돋아나는 새싹들"
             ]
           },
@@ -422,7 +427,7 @@
                 question: "이 시의 2연에서 물소리를 '나즉나즉 자장가처럼 들리던'으로 묘사한 표현 기법은 무엇입니까?",
                 options: ["은유법", "직유법", "의인법", "점층법"],
                 answer: 1,
-                explanation: "'~처럼'이라는 연결어를 사용하여 물소리를 자장가에 직접 빗대었으므로 직유법에 해당"
+                explanation: "'~처럼'이라는 연결어를 사용하여 물소리를 자장가에 직접 빗대었으므로직유법에 해당"
               },
               {
                 id: "march_q4",
@@ -723,7 +728,7 @@
             details: [
               "📌 [주요 어휘의 의미]",
               "중양절 (음력 9월 9일): 우리 조상들이 완벽한 완성보다 하나가 부족한 수인 아홉을 도리어 사랑하고 명절로 고귀하게 모신 민족적 세시 풍속",
-              "기네스북 기록: 언젠가 누군가에 의해 깨지기 마련인 미완성의 인간적 창조물로써, 역설적으로 완벽한 것은 없다는 인류 보편의 진리를 입증",
+              "기네스북 기록:  언젠가 누군가에 의해 깨지기 마련인 미완성의 인간적 창조물로써, 역설적으로 완벽한 것은 없다는 인류 보편의 진리를 입증",
               "어설픔: 채워지지 않아 부족하지만 무한한 자기 개발과 성장의 여지를 활짝 열어 두는 청소년들의 가치 있고 당연한 속성",
               "📌 [단락의 내용]",
               "첫 부분: 아홉(9)과 열(10)의 수학적 크기를 넘어 오랜 우리 조상들이 9를 더 사랑하여 큰 명절인 중양절로 기려왔음을 전제하며 글머리를 개방",
@@ -742,7 +747,7 @@
           },
           "사람에 빗대어진 표현": {
             icon: "fa-users-viewfinder",
-            title: "어른과 청소년에 빗대어진 표현 분석",
+            title: "어른 and 청소년에 빗대어진 표현 분석",
             content: "각 숫자의 특성을 기성 인간 사회의 생애 단계에 연계하여 인격화한 비유 기법 분석",
             isComparison: true, 
             details: [
@@ -792,7 +797,7 @@
                   "일상의 관찰에서 영감을 얻어 깊은 깨달음이나 성찰을 건넨다."
                 ],
                 answer: 1,
-                explanation: "수필은 일정한 형식의 제한 없이 자유롭게 작성할 수 있는 경수필이 주를 이룹니다."
+                explanation: "수필은 일정한 형식의 제한 없이 자유롭게 작성할 수 있는 경수필이 주를 이웁니다."
               },
               {
                 id: "nine_q4",
@@ -827,15 +832,15 @@
               },
               {
                 id: "nine_q7",
-                question: "글의 구성상 '처음-중간-끝'의 유기적 짜임이 뜻하는 수필의 속성은 무엇인가요?",
+                question: "이 수필의 중간 과정에서 삼촌이 조카의 순수한 판단 기준을 듣고 느낀 내면의 부끄러움은 글쓴이의 어떤 태도에서 비롯된 것인가요?",
                 options: [
-                  "사건의 과장된 반전",
-                  "일상적 경험(처음/중간)에서 점차 교훈적 주제의식과 성찰(끝)로 자연스럽게 귀결되는 특성",
-                  "판타지 소설과 같은 영웅의 모험 일지",
-                  "두 대상의 치열한 말다툼 구도"
+                  "조카와 경쟁하여 미술 점수를 더 높게 받으려던 유치한 욕심",
+                  "수학적 관계나 논리를 조카에게 억지로 설명하며 타산적 잣대(10)만 중시하던 태도",
+                  "스케치북에 낙서하지 말라며 엄격하게 꾸짖던 행동",
+                  "명절에 고향에 내려가 친척들과 어울리지 못하던 성격"
                 ],
                 answer: 1,
-                explanation: "일상에서 겪은 경험을 소박하게 제시하고, 대화를 거쳐 깊고 묵직한 인간적 반성의 결론을 이끌어내는 구성입니다."
+                explanation: "숫자의 순수한 기하학적 의미보다 그 안에 담긴 주관적 정성을 보지 못하고, 계산적 척도만을 들이대던 자신을 돌아봅니다."
               },
               {
                 id: "nine_q8",
@@ -1010,10 +1015,99 @@
       else if (contentData.isInteractivePoem) {
         renderInteractivePoem(detailsArea, contentData);
       } 
-      // 분기점 3: 일반 요약 자료 리스트 일 때
+      // 분기점 3: 시의 종류 (Classified) 일 때
+      else if (contentData.isClassified) {
+        renderClassifiedList(detailsArea, contentData);
+      }
+      // 분기점 4: 일반 요약 자료 리스트 일 때
       else {
         renderDetailsList(detailsArea, contentData);
       }
+    }
+
+    // 시의 종류 대칭 정렬 렌더러
+    function renderClassifiedList(container, contentData) {
+      const mainWrapper = document.createElement("div");
+      mainWrapper.className = "space-y-8 text-left animate-fade-in";
+
+      // 1. 내용상 분류 섹션
+      const contentSection = document.createElement("div");
+      contentSection.className = "flex flex-col gap-3";
+      contentSection.innerHTML = `
+        <div class="flex items-center gap-2 text-lg font-bold text-indigo-950">
+          <i class="fa-solid fa-folder text-indigo-600 w-5 text-center"></i>
+          <span>내용상 분류</span>
+        </div>
+      `;
+
+      // 아이콘 너비(w-5=20px) + gap-2(8px) = 28px 오프셋 반영 -> pl-7 (28px) 설정으로 '내'자 시작점과 완벽 일치
+      const contentCardsDiv = document.createElement("div");
+      contentCardsDiv.className = "pl-7 space-y-3";
+
+      contentData.details.content.forEach(detail => {
+        const card = createClassifiedCard(detail);
+        contentCardsDiv.appendChild(card);
+      });
+      contentSection.appendChild(contentCardsDiv);
+      mainWrapper.appendChild(contentSection);
+
+      // 2. 형식상 분류 섹션
+      const formSection = document.createElement("div");
+      formSection.className = "flex flex-col gap-3";
+      formSection.innerHTML = `
+        <div class="flex items-center gap-2 text-lg font-bold text-indigo-950">
+          <i class="fa-solid fa-folder-open text-indigo-600 w-5 text-center"></i>
+          <span>형식상 분류</span>
+        </div>
+      `;
+
+      // '형'자 시작점과 완벽히 대응되도록 pl-7 (28px) 오프셋 설정
+      const formCardsDiv = document.createElement("div");
+      formCardsDiv.className = "pl-7 space-y-3";
+
+      contentData.details.form.forEach(detail => {
+        const card = createClassifiedCard(detail);
+        formCardsDiv.appendChild(card);
+      });
+      formSection.appendChild(formCardsDiv);
+      mainWrapper.appendChild(formSection);
+
+      container.appendChild(mainWrapper);
+    }
+
+    // 시의 종류 분류 카드 생성 헬퍼 함수
+    function createClassifiedCard(detail) {
+      const card = document.createElement("div");
+      card.className = "p-5 rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-all duration-200 text-left w-full";
+
+      const cleanDetail = detail.replace(/^[📌💡✨🔍👉◆]\s*/, "");
+      const colonIndex = cleanDetail.indexOf(':');
+      let textSegmentHtml = "";
+
+      if (colonIndex !== -1) {
+        const term = cleanDetail.substring(0, colonIndex + 1);
+        const desc = cleanDetail.substring(colonIndex + 1);
+        textSegmentHtml = `
+          <span class="hanging-indent-term">${term}</span>
+          <span class="text-gray-700 font-medium">${desc}</span>
+        `;
+      } else {
+        textSegmentHtml = `
+          <span class="text-indigo-950 font-bold">${cleanDetail}</span>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="hanging-indent-container">
+          <span class="text-indigo-500 flex-shrink-0 mt-1">
+            <i class="fa-solid fa-circle text-[8px]"></i>
+          </span>
+          <div class="hanging-indent-content text-sm md:text-base leading-relaxed">
+            ${textSegmentHtml}
+          </div>
+        </div>
+      `;
+      return card;
     }
 
     // 일반 개념 및 텍스트 리스트 렌더러
